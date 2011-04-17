@@ -7,7 +7,7 @@ $KCODE="u"
 
 # = ExtractContent : Extract Content Module for html
 # This module is to extract the text from web page ( html content ).
-# Automatically extracts sub blocks of html which have much possibility that it is the text 
+# Automatically extracts sub blocks of html which have much possibility that it is the text
 # ( except for menu, comments, navigations, affiliate links and so on ).
 
 # == PROCESSES
@@ -29,15 +29,15 @@ module Distillery
 
   # Default option parameters.
   DEFAULT = {
-		:threshold => 100,																				# threhold for score of the text
-		:min_length => 80,																				# minimum length of evaluated blocks
-		:decay_factor => 0.73,																		# decay factor for block score
-		:continuous_factor => 1.62, 															# continuous factor for block score ( the larger, the harder to continue )
-		:punctuation_weight => 10,																# score weight for punctuations
-		:punctuations => /(\343\200[\201\202]|\357\274[\201\214\216\237]|\.[^A-Za-z0-9]|,[^0-9]|!|\?)/,
-																															# punctuation characters
-		:waste_expressions => /Copyright|All Rights Reserved/i, 	# characteristic keywords including footer
-		:debug => false,																					# if true, output block information to stdout
+    :threshold => 100,                                        # threhold for score of the text
+    :min_length => 80,                                        # minimum length of evaluated blocks
+    :decay_factor => 0.73,                                    # decay factor for block score
+    :continuous_factor => 1.62,                               # continuous factor for block score ( the larger, the harder to continue )
+    :punctuation_weight => 10,                                # score weight for punctuations
+    :punctuations => /(\343\200[\201\202]|\357\274[\201\214\216\237]|\.[^A-Za-z0-9]|,[^0-9]|!|\?)/,
+                                                              # punctuation characters
+    :waste_expressions => /Copyright|All Rights Reserved/i,   # characteristic keywords including footer
+    :debug => false,                                          # if true, output block information to stdout
   }
 
   class Extractor < Module
