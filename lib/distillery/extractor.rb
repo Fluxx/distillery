@@ -1,5 +1,5 @@
 module Distillery
-  class Extractor < Module
+  class Extractor
 
     # Sets option parameters to default.
     # Parameter opt is given as Hash
