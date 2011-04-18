@@ -23,9 +23,8 @@ module Distillery
     # Convert all divs with no bock-level element children to paragraphs.  Some people
     # wrap their paragraphs in divs, not p
     doc.search('div').each do |div|
-      # If there are no children or all the divs below are empty (likely clearfix or something)
-      if div.children.none? { |c| BLOCK_ELEMENTS.include?(c.name) } || div.search('div').all? { |sd| sd.text == "" }
-        div.replace("<p>#{div.inner_html}</p>")
+      if (div.children.any? && div.children.none? { |c| BLOCK_ELEMENTS.include?(c.name) }) || (div.search('div').any? && div.search('div').all? { |sd| sd.text == "" })
+        div.name = "p"
       end
     end
 
