@@ -22,4 +22,8 @@ Gem::Specification.new do |s|
   s.add_dependency('nokogiri', '> 1.0')
   
   s.add_development_dependency('rspec', '> 2.0')
+  s.add_development_dependency('guard')
+  s.add_development_dependency('guard-rspec')
+  s.add_development_dependency('ruby-debug19')
+  s.add_development_dependency('rb-fsevent')
 end
