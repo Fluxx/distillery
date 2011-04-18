@@ -17,8 +17,8 @@ module Distillery
     end
 
     # TODO: Convert newline breaks to paragraphs
-    
-    # Convert all divs with no bock-level element children to paragraphs.  Some people 
+
+    # Convert all divs with no bock-level element children to paragraphs.  Some people
     # wrap their paragraphs in divs, not p
     doc.search('div').each do |div|
       if div.children.none? { |c| BLOCK_ELEMENTS.include?(c.name) }
@@ -34,7 +34,8 @@ module Distillery
     # - Points for low link-density
     # Parent gets sum of score of children, grandparent 1/2 the score of their children
     doc.search('p').each do |paragraph|
-      points = paragraph.text.count(',')
+      points = 1
+      points += paragraph.text.count(',')
       points += paragraph.text.length / 100
       points -= paragraph.children.css('a').count
 
@@ -46,9 +47,8 @@ module Distillery
       scores[parent.path] = scores[parent.path] + points
       scores[grandparent.path] = scores[grandparent.path] + points/2
     end
-    
+
     scores = scores.sort_by { |xpath, score| score }.reverse
-    
     # Sort the scores and look at our top candidate
     top_xpath, top_score = scores.first.first
     doc.search(top_xpath).inner_html
