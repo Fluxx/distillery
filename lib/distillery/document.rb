@@ -1,4 +1,5 @@
 require "delegate"
+require "nokogiri"
 
 module Distillery
   

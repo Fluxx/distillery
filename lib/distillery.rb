@@ -1,4 +1,3 @@
-require "nokogiri"
 require "distillery/document"
 
 module Distillery
