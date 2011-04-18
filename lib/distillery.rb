@@ -1,7 +1,9 @@
+require "ruby-debug"
+
 module Distillery
 
   UNLIKELY_TAGS = %w[head script link meta]
-  UNLIKELY_CLASSES = /combx|comment|disqus|foot|header|menu|meta|nav|rss|shoutbox|sidebar|sponsor/
+  UNLIKELY_CLASSES = /combx|comment|disqus|foot|header|menu|meta|nav|rss|shoutbox|sidebar|sponsor/i
   BLOCK_ELEMENTS = %w[a blockquote dl div img ol p pre table ul]
 
   def self.distill(document)
