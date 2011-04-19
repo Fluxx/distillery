@@ -63,7 +63,22 @@ module Distillery
       end
     end
 
+    # Distills the document down to just its content
+    def distill
+      prep_for_distillation
+      sorted = scores.sort_by { |xpath, score| score }.reverse
+      top_xpath, top_score = sorted.first.first
+      search(top_xpath).inner_html
+    end
+
     private
+
+    def prep_for_distillation
+      remove_irrelevant_elements
+      remove_unlikely_elements
+      coerce_elements_to_paragraphs
+      score!
+    end
 
     def has_no_block_children?(elem)
       elem.children.any? && elem.children.none? { |c| BLOCK_ELEMENTS.include?(c.name) }

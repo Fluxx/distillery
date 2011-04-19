@@ -135,5 +135,27 @@ module Distillery
 
     end
 
+    describe '#distill' do
+      it 'returns the page content' do
+        subject.distill.should =~ /great for lazy bakers/
+      end
+
+      it 'returns markup without the header' do
+        subject.distill.should_not =~ /skinnytasteheader_1000_3/
+      end
+
+      it 'returns markup withouth the footer' do
+        subject.distill.should_not =~ /Design by Call Me Kristin/
+      end
+
+      it 'returns markup without navigation' do
+        subject.distill.should_not =~ /STNavbar1/
+      end
+
+      it 'returns markup without comments' do
+        subject.distill.should_not =~ /Cindy said.../
+      end
+    end
+
   end
 end
