@@ -7,6 +7,10 @@ module Distillery
     let!(:noko_doc) { ::Nokogiri::HTML(document) }
     subject { Document.new(document) }
 
+    def document_of(html)
+      Document.new("<html><body>#{html}</body></html>")
+    end
+
     describe ".new" do
 
       it 'raises an exception without an argument' do
@@ -70,6 +74,63 @@ module Distillery
         doc = Document.new("<html><body><div><pre>foo</pre><div></div></div></body></html>")
         doc.coerce_elements_to_paragraphs
         doc.inner_html.gsub("\n", "").should == "<html><body><p><pre>foo</pre><div></div></p></body></html>"
+      end
+
+    end
+
+    describe '#score!' do
+
+      it 'popualtes the score ivar with data' do
+        subject.scores.should be_a(Hash)
+        subject.scores.should be_empty
+        subject.score!
+        subject.scores.should_not be_empty
+      end
+
+      it 'only calculates scores for paragraphs' do
+        doc = document_of("<p>foo</p><div>bar</div>")
+        doc.score!
+        doc.scores.should_not have_key('/html/body/div')
+        doc.scores.should have_key('/html/body/p')
+      end
+
+      it 'gives one point to elements by default' do
+        doc = document_of("<p>foo</p>")
+        doc.score!
+        doc.scores['/html/body/p'].should == 1
+      end
+
+      it 'gives one point per comma in the text of an element' do
+        doc = document_of("<p>foo,bar,baz</p>")
+        doc.score!
+        doc.scores['/html/body/p'].should == 3
+      end
+
+      it 'gives one point per chunk of 100 characters' do
+        doc = document_of("<p>#{'f'*201}</p>")
+        doc.score!
+        doc.scores['/html/body/p'].should == 3
+      end
+
+      it 'subtracts a point for any links in a element' do
+        doc = document_of("<p><a>foo</a></p>")
+        doc.score!
+        doc.scores['/html/body/p'].should == 0
+      end
+
+      it 'adds its own points to its parent' do
+        doc = document_of("<p><div><p>foo</p></div></p>")
+        doc.score!
+        doc.scores['/html/body/div/p'].should == 1
+        doc.scores['/html/body/div'].should == 1
+      end
+
+      it 'adds 1/2 its points to its grandparent' do
+        doc = document_of("<p><div><div><p>foo</p></div></div></p>")
+        doc.score!
+        doc.scores['/html/body/div/div/p'].should == 1
+        doc.scores['/html/body/div/div'].should == 1
+        doc.scores['/html/body/div'].should == 0.5
       end
 
     end

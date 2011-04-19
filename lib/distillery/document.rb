@@ -9,9 +9,10 @@ module Distillery
     UNLIKELY_CLASSES = /combx|comment|disqus|foot|header|menu|meta|nav|rss|shoutbox|sidebar|sponsor/i
     BLOCK_ELEMENTS = %w[a blockquote dl div img ol p pre table ul]
 
-    attr_reader :doc
+    attr_reader :doc, :scores
 
     def initialize(page_string)
+      @scores = Hash.new(0)
       super(::Nokogiri::HTML(page_string))
     end
 
@@ -36,16 +37,41 @@ module Distillery
         div.name = "p" if has_no_block_children?(div) || has_only_empty_div_children?(div)
       end
     end
-    
+
+    # Scores the document elements based on an algorithm to find elements which hold page
+    # content.
+    #
+    # Assign each paragraph a score
+    # - Point per comma
+    # - Point per set of 100 characters
+    # - Points for low link-density
+    # Parent gets sum of score of children, grandparent 1/2 the score of their children
+    def score!
+      search('p').each do |paragraph|
+        points = 1
+        points += paragraph.text.count(',')
+        points += paragraph.text.length / 100
+        points -= paragraph.children.css('a').count
+
+        scores[paragraph.path] = points
+
+        parent = paragraph.parent
+        scores[parent.path] = scores[parent.path] + points
+
+        grandparent = parent.parent
+        scores[grandparent.path] = scores[grandparent.path] + points.to_f/2
+      end
+    end
+
     private
-    
+
     def has_no_block_children?(elem)
       elem.children.any? && elem.children.none? { |c| BLOCK_ELEMENTS.include?(c.name) }
     end
-    
+
     def has_only_empty_div_children?(elem)
       elem.search('div').any? && elem.search('div').all? { |subdiv| subdiv.text == "" }
     end
-    
+
   end
 end
