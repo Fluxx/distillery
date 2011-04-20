@@ -155,6 +155,13 @@ module Distillery
       it 'returns markup without comments' do
         subject.distill.should_not =~ /Cindy said.../
       end
+
+      it 'keeps the encoding of the string was passed in to the constructor' do
+        string = "<html><body><p>foo</p></body></html>"
+        string.encode!('ISO-8859-1')
+        Document.new(string).distill.encoding.name.should == 'ISO-8859-1'
+      end
+
     end
 
   end
