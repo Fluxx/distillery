@@ -66,12 +66,21 @@ module Distillery
     # Distills the document down to just its content
     def distill
       prep_for_distillation
-      sorted = scores.sort_by { |xpath, score| score }.reverse
-      top_xpath, top_score = sorted.first.first
-      search(top_xpath).inner_html
+
+      top_scoring_element.search("*").each do |node|
+        node.remove if node.text.chomp.empty? and node.element?
+      end
+
+      top_scoring_element.inner_html
     end
 
     private
+
+    def top_scoring_element
+      sorted = scores.sort_by { |xpath, score| score }.reverse
+      top_xpath, top_score = sorted.first.first
+      at(top_xpath)
+    end
 
     def prep_for_distillation
       remove_irrelevant_elements

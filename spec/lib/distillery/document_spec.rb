@@ -162,6 +162,12 @@ module Distillery
         Document.new(string).distill.encoding.name.should == 'ISO-8859-1'
       end
 
+      it 'returns a document with no empty elements' do
+        Nokogiri::HTML(subject.distill).search("*").each do |element|
+          element.text.should_not be_empty
+        end
+      end
+
     end
 
   end
