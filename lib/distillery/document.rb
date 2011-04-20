@@ -77,6 +77,7 @@ module Distillery
       remove_irrelevant_elements
       remove_unlikely_elements
       coerce_elements_to_paragraphs
+      # TODO: Convert newline breaks to paragraphs
       score!
     end
 
