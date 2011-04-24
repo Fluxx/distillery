@@ -145,6 +145,36 @@ module Distillery
 
     end
 
+    describe 'clean_top_scoring_element!' do
+      def scored_document_of(markup)
+        doc = document_of(markup)
+        doc.prep_for_distillation!
+        doc.score!
+        doc
+      end
+
+      it 'removes all empty elements' do
+        doc = scored_document_of("<p>foo <div></div></p>")
+        doc.clean_top_scoring_element!
+        doc.search('div').should be_empty
+      end
+
+      %w[iframe form object].each do |tag|
+        it "removes any #{tag} elements" do
+          doc = scored_document_of("<p>foo <div><#{tag}></#{tag}></div></p>")
+          doc.clean_top_scoring_element!
+          doc.search(tag).should be_empty
+        end
+      end
+
+      it 'removes elements that have negative scores' do
+        doc = scored_document_of("<p>foo <div class='widget'>bar</div>")
+        doc.clean_top_scoring_element!
+        doc.search('div').should be_empty
+      end
+
+    end
+
     describe '#distill!' do
       it 'returns the page content' do
         subject.distill!.should =~ /great for lazy bakers/
@@ -170,12 +200,6 @@ module Distillery
         string = "<html><body><p>foo</p></body></html>"
         string.encode!('ISO-8859-1')
         Document.new(string).distill!.encoding.name.should == 'ISO-8859-1'
-      end
-
-      it 'returns a document with no empty elements' do
-        Nokogiri::HTML(subject.distill!).search("*").each do |element|
-          element.text.should_not be_empty
-        end
       end
 
     end

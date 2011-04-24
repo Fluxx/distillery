@@ -8,6 +8,10 @@ module Distillery
     UNLIKELY_TAGS = %w[head script link meta]
     UNLIKELY_IDENTIFIERS = /combx|comment|disqus|foot|header|menu|meta|nav|rss|shoutbox|sidebar|sponsor/i
     BLOCK_ELEMENTS = %w[a blockquote dl div img ol p pre table ul]
+    POSITIVE_IDENTIFIERS = /article|body|content|entry|hentry|page|pagination|post|text/i
+    NEGATIVE_IDENTIFIERS = /combx|comment|contact|foot|footer|footnote|link|media|meta|promo|related|scroll|shoutbox|sponsor|tags|widget/i
+    UNRELATED_ELEMENTS = %w[iframe form object]
+    POSSIBLE_UNRELATED_ELEMENTS = %w[table ul div]
 
     attr_reader :doc, :scores
 
@@ -76,9 +80,17 @@ module Distillery
       top_scoring_element.inner_html
     end
 
+    # Attempts to clean the top scoring node from non-page content items, such as
+    # advertisements, widgets, etc
     def clean_top_scoring_element!
       top_scoring_element.search("*").each do |node|
-        node.remove if node.text.chomp.empty? and node.element?
+        if UNRELATED_ELEMENTS.include?(node.name)
+          node.remove
+        elsif POSSIBLE_UNRELATED_ELEMENTS.include?(node.name) && identifier_weight(node) < 0
+          node.remove
+        elsif unlikely_to_be_content?(node)
+          node.remove
+        end
       end
     end
 
@@ -111,6 +123,19 @@ module Distillery
 
     def has_only_empty_div_children?(elem)
       elem.search('div').all? { |subdiv| subdiv.text == "" }
+    end
+
+    def identifier_weight(elem)
+      0.tap do |weight|
+        {POSITIVE_IDENTIFIERS => 25, NEGATIVE_IDENTIFIERS => -25}.each do |regex, score|
+          weight += score if elem['class'] =~ regex
+          weight += score if elem['id'] =~ regex
+        end
+      end
+    end
+
+    def unlikely_to_be_content?(elem)
+      false
     end
 
   end
