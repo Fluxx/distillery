@@ -32,6 +32,8 @@ module Distillery
 
     # Corrects improper use of HTML tags by coerceing elements that are likely paragraphs
     # to <p> tags
+    # 
+    # TODO: Convert text nodes to <p> as well
     def coerce_elements_to_paragraphs
       search('div').each do |div|
         div.name = "p" if has_no_block_children?(div) || has_only_empty_div_children?(div)
@@ -49,7 +51,7 @@ module Distillery
     def score!
       search('p').each do |paragraph|
         points = 1
-        points += paragraph.text.count(',')
+        points += paragraph.text.split(',').length
         points += paragraph.text.length / 100
         points -= paragraph.children.css('a').count
 
