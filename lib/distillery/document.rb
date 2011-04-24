@@ -53,7 +53,6 @@ module Distillery
         points = 1
         points += paragraph.text.split(',').length
         points += [paragraph.text.length / 100, 3].min
-        points -= paragraph.children.css('a').count
 
         scores[paragraph.path] = points
 
@@ -63,6 +62,8 @@ module Distillery
         grandparent = parent.parent
         scores[grandparent.path] = scores[grandparent.path] + points.to_f/2
       end
+
+      augment_scores_by_link_weight
     end
 
     # Distills the document down to just its content
@@ -85,6 +86,14 @@ module Distillery
     end
 
     private
+
+    def augment_scores_by_link_weight
+      scores.each do |xpath, points|
+        link_length = at(xpath).search('a').reduce(0) { |total, e| total + e.text.length }
+        total_length = [at(xpath).text.length, 1].max # Protect against dividing by 0
+        scores[xpath] = scores[xpath] * (1 - link_length.to_f / total_length.to_f)
+      end
+    end
 
     def top_scoring_element
       sorted = scores.sort_by { |xpath, score| score }.reverse

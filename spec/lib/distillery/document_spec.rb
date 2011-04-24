@@ -100,12 +100,6 @@ module Distillery
         doc.scores.should have_key('/html/body/p')
       end
 
-      it 'gives one point to elements by default' do
-        doc = document_of("<p>foo</p>")
-        doc.score!
-        doc.scores['/html/body/p'].should == 2
-      end
-
       it 'gives one point per comma in the text of an element' do
         doc = document_of("<p>foo,bar,baz</p>")
         doc.score!
@@ -116,16 +110,10 @@ module Distillery
         doc = document_of("<p>#{'f'*201}</p>")
         doc.score!
         doc.scores['/html/body/p'].should == 4
-        
+
         doc = document_of("<p>#{'f'*1000}</p>")
         doc.score!
         doc.scores['/html/body/p'].should == 5
-      end
-      
-      it 'subtracts a point for any links in a element' do
-        doc = document_of("<p><a>foo</a></p>")
-        doc.score!
-        doc.scores['/html/body/p'].should == 1
       end
 
       it 'adds its own points to its parent' do
@@ -141,6 +129,12 @@ module Distillery
         doc.scores['/html/body/div/div/p'].should == 2
         doc.scores['/html/body/div/div'].should == 2
         doc.scores['/html/body/div'].should == 1
+      end
+
+      it 'scales the final score by the inverse link density' do
+        doc = document_of("<p>foobar<a>baz</a></p>")
+        doc.score!
+        doc.scores['/html/body/p'].should == 1.3333333333333335
       end
 
     end
