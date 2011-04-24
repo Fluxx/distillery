@@ -34,3 +34,5 @@ namespace :fixture do
     sh "open #{outfile.path}"
   end
 end
+
+task :default => :spec
