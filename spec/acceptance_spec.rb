@@ -8,7 +8,7 @@ def distillation_of(filename, &block)
       File.read(File.join(File.dirname(__FILE__), 'fixtures', filename))
     end
 
-    subject { Distillery::Document.new(fixture).distill }
+    subject { Distillery::Document.new(fixture).distill! }
 
     it 'should include the right elements' do
       instance_eval(&block)
