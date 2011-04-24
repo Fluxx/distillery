@@ -26,7 +26,8 @@ module Distillery
     # that seem to indicate they are comments, headers, footers, nav, etc
     def remove_unlikely_elements
       search('*').each do |element|
-        element.remove if "#{element['class']}#{element['id']}" =~ UNLIKELY_IDENTIFIERS
+        idclass = "#{element['class']}#{element['id']}"
+        element.remove if idclass =~ UNLIKELY_IDENTIFIERS && element.name != 'body'
       end
     end
 
