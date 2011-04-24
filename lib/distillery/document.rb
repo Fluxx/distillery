@@ -18,13 +18,13 @@ module Distillery
 
     # Removes irrelevent elements from the document.  This is usually things like <script>,
     # <link> and other page elements we don't care about
-    def remove_irrelevant_elements(tags = UNLIKELY_TAGS)
+    def remove_irrelevant_elements!(tags = UNLIKELY_TAGS)
       search(*tags).each(&:remove)
     end
 
     # Removes unlikely elements from the document.  These are elements who have classes
     # that seem to indicate they are comments, headers, footers, nav, etc
-    def remove_unlikely_elements
+    def remove_unlikely_elements!
       search('*').each do |element|
         idclass = "#{element['class']}#{element['id']}"
         element.remove if idclass =~ UNLIKELY_IDENTIFIERS && element.name != 'body'
@@ -35,7 +35,7 @@ module Distillery
     # to <p> tags
     #
     # TODO: Convert text nodes to <p> as well
-    def coerce_elements_to_paragraphs
+    def coerce_elements_to_paragraphs!
       search('div').each do |div|
         div.name = "p" if has_no_block_children?(div) || has_only_empty_div_children?(div)
       end
@@ -64,12 +64,12 @@ module Distillery
         scores[grandparent.path] = scores[grandparent.path] + points.to_f/2
       end
 
-      augment_scores_by_link_weight
+      augment_scores_by_link_weight!
     end
 
     # Distills the document down to just its content
-    def distill
-      prep_for_distillation
+    def distill!
+      prep_for_distillation!
       score!
       clean_top_scoring_element!
 
@@ -82,16 +82,16 @@ module Distillery
       end
     end
 
-    def prep_for_distillation
-      remove_irrelevant_elements
-      remove_unlikely_elements
-      coerce_elements_to_paragraphs
+    def prep_for_distillation!
+      remove_irrelevant_elements!
+      remove_unlikely_elements!
+      coerce_elements_to_paragraphs!
       # TODO: Convert newline breaks to paragraphs
     end
 
     private
 
-    def augment_scores_by_link_weight
+    def augment_scores_by_link_weight!
       scores.each do |xpath, points|
         link_length = at(xpath).search('a').reduce(0) { |total, e| total + e.text.length }
         total_length = [at(xpath).text.length, 1].max # Protect against dividing by 0

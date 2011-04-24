@@ -33,34 +33,34 @@ module Distillery
 
     end
 
-    describe 'remove_irrelevant_elements' do
+    describe 'remove_irrelevant_elements!' do
 
       %w[script link meta].each do |tag|
         it "should strip out ##{tag} tags" do
           subject.search(tag).should_not be_empty
-          subject.remove_irrelevant_elements
+          subject.remove_irrelevant_elements!
           subject.search(tag).should be_empty
         end
       end
 
       it 'does not remove the body even if it has a bad class or id' do
         doc = Document.new("<html><body class='sidebar'>foo</body></html>")
-        doc.remove_unlikely_elements
+        doc.remove_unlikely_elements!
         doc.search('body').should_not be_empty
       end
 
     end
 
-    describe 'remove_unlikely_elements' do
+    describe 'remove_unlikely_elements!' do
       %w[combx comment disqus foot header menu meta nav rss shoutbox sidebar sponsor].each do |klass|
         it "removes any elements classed .#{klass}, as it is unlikely to be page content" do
           doc = Document.new("<html><body><div class='#{klass}'>foo</div></body></html>")
-          doc.remove_unlikely_elements
+          doc.remove_unlikely_elements!
           doc.inner_html.should == "<html><body></body></html>"
         end
         it "removes any elements id'd ##{klass}, as it is unlikely to be page content" do
           doc = Document.new("<html><body><div id='#{klass}'>foo</div></body></html>")
-          doc.remove_unlikely_elements
+          doc.remove_unlikely_elements!
           doc.inner_html.should == "<html><body></body></html>"
         end
 
@@ -68,23 +68,23 @@ module Distillery
 
     end
 
-    describe 'coerce_elements_to_paragraphs' do
+    describe 'coerce_elements_to_paragraphs!' do
 
       it 'converts divs who have no children to paragraphs' do
         doc = Document.new("<html><body><div>foo</div></body></html>")
-        doc.coerce_elements_to_paragraphs
+        doc.coerce_elements_to_paragraphs!
         doc.inner_html.should == "<html><body><p>foo</p></body></html>"
       end
 
       it 'converts divs who have children that are not block-level elements to paragraphs' do
         doc = Document.new("<html><body><div><span>foo</span></div></body></html>")
-        doc.coerce_elements_to_paragraphs
+        doc.coerce_elements_to_paragraphs!
         doc.inner_html.should == "<html><body><p><span>foo</span></p></body></html>"
       end
 
       it 'converts divs whose have empty child divs to paragrahs' do
         doc = Document.new("<html><body><div><pre>foo</pre><div></div></div></body></html>")
-        doc.coerce_elements_to_paragraphs
+        doc.coerce_elements_to_paragraphs!
         doc.inner_html.gsub("\n", "").should == "<html><body><p><pre>foo</pre><p></p></p></body></html>"
       end
 
@@ -145,35 +145,35 @@ module Distillery
 
     end
 
-    describe '#distill' do
+    describe '#distill!' do
       it 'returns the page content' do
-        subject.distill.should =~ /great for lazy bakers/
+        subject.distill!.should =~ /great for lazy bakers/
       end
 
       it 'returns markup without the header' do
-        subject.distill.should_not =~ /skinnytasteheader_1000_3/
+        subject.distill!.should_not =~ /skinnytasteheader_1000_3/
       end
 
       it 'returns markup withouth the footer' do
-        subject.distill.should_not =~ /Design by Call Me Kristin/
+        subject.distill!.should_not =~ /Design by Call Me Kristin/
       end
 
       it 'returns markup without navigation' do
-        subject.distill.should_not =~ /STNavbar1/
+        subject.distill!.should_not =~ /STNavbar1/
       end
 
       it 'returns markup without comments' do
-        subject.distill.should_not =~ /Cindy said.../
+        subject.distill!.should_not =~ /Cindy said.../
       end
 
       it 'keeps the encoding of the string was passed in to the constructor' do
         string = "<html><body><p>foo</p></body></html>"
         string.encode!('ISO-8859-1')
-        Document.new(string).distill.encoding.name.should == 'ISO-8859-1'
+        Document.new(string).distill!.encoding.name.should == 'ISO-8859-1'
       end
 
       it 'returns a document with no empty elements' do
-        Nokogiri::HTML(subject.distill).search("*").each do |element|
+        Nokogiri::HTML(subject.distill!).search("*").each do |element|
           element.text.should_not be_empty
         end
       end
