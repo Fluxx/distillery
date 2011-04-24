@@ -52,6 +52,12 @@ module Distillery
           doc.remove_unlikely_elements
           doc.inner_html.should == "<html><body></body></html>"
         end
+        it "removes any elements id'd ##{klass}, as it is unlikely to be page content" do
+          doc = Document.new("<html><body><div id='#{klass}'>foo</div></body></html>")
+          doc.remove_unlikely_elements
+          doc.inner_html.should == "<html><body></body></html>"
+        end
+
       end
 
     end

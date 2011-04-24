@@ -6,7 +6,7 @@ module Distillery
   class Document < SimpleDelegator
 
     UNLIKELY_TAGS = %w[head script link meta]
-    UNLIKELY_CLASSES = /combx|comment|disqus|foot|header|menu|meta|nav|rss|shoutbox|sidebar|sponsor/i
+    UNLIKELY_IDENTIFIERS = /combx|comment|disqus|foot|header|menu|meta|nav|rss|shoutbox|sidebar|sponsor/i
     BLOCK_ELEMENTS = %w[a blockquote dl div img ol p pre table ul]
 
     attr_reader :doc, :scores
@@ -26,7 +26,7 @@ module Distillery
     # that seem to indicate they are comments, headers, footers, nav, etc
     def remove_unlikely_elements
       search('*').each do |element|
-        element.remove if element['class'] =~ UNLIKELY_CLASSES
+        element.remove if "#{element['class']}#{element['id']}" =~ UNLIKELY_IDENTIFIERS
       end
     end
 
