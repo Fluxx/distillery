@@ -102,11 +102,11 @@ module Distillery
     end
 
     def has_no_block_children?(elem)
-      elem.children.any? && elem.children.none? { |c| BLOCK_ELEMENTS.include?(c.name) }
+      elem.children.none? { |c| BLOCK_ELEMENTS.include?(c.name) }
     end
 
     def has_only_empty_div_children?(elem)
-      elem.search('div').any? && elem.search('div').all? { |subdiv| subdiv.text == "" }
+      elem.search('div').all? { |subdiv| subdiv.text == "" }
     end
 
   end

@@ -79,7 +79,7 @@ module Distillery
       it 'converts divs whose have empty child divs to paragrahs' do
         doc = Document.new("<html><body><div><pre>foo</pre><div></div></div></body></html>")
         doc.coerce_elements_to_paragraphs
-        doc.inner_html.gsub("\n", "").should == "<html><body><p><pre>foo</pre><div></div></p></body></html>"
+        doc.inner_html.gsub("\n", "").should == "<html><body><p><pre>foo</pre><p></p></p></body></html>"
       end
 
     end
