@@ -26,3 +26,13 @@ distillation_of 'agave_cookies.html' do
   should_not =~ /Get Email Updates/                         # Sidebar
   should_not =~ /id="footer"/                               # Footer
 end
+
+distillation_of 'clams_and_linguini.html' do
+  should =~ /<h2>Linguini with Clam Sauce Recipe<\/h2>/
+  should =~ /2 pounds small clams in the shell/
+  should =~ /completely evaporated./
+
+  should_not =~ /Licorice sounds interesting./              # Comment
+  should_not =~ /Bookmark this page using the following/    # Footer
+  should_not =~ /Google Search/                             # Header
+end
