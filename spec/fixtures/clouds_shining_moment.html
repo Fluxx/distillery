@@ -1,0 +1,2145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" id="sixapart-standard">
+<head>
+<!-- chartbeat -->
+<script type="text/javascript">var _sf_startpt=(new Date()).getTime()</script>
+<!-- #chartbeat -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>The AWS Outage: The Cloud's Shining Moment - O'Reilly Broadcast</title>
+    <meta name="generator" content="Movable Type Pro 4.21-en" />
+<!-- metas7 -->
+
+
+<meta name="keywords" content="aws, cloudcomputing, designforfailure, NoSQL" />
+
+<meta name="description" content="So many cloud pundits are piling on to the misfortunes of Amazon Web Services this week as a response to the massive failures in the AWS Virginia region. If you think this week exposed weakness in the cloud, you don't get it: it was the cloud's shining moment, exposing the strength of cloud computing." />
+
+
+<meta name="search_date" content="2011-04-23" />
+<meta name="author" content="George Reese" />
+
+<!-- metas7 -->
+
+<link rel="alternate" type="application/atom+xml" title="O'Reilly News" href="http://feeds.oreilly.com/oreilly/news" />
+
+
+<link rel="alternate" type="application/atom+xml" title="George Reese" href="http://broadcast.oreilly.com/george-reese/atom.xml" />
+
+	<script src="http://blogs.oreilly.com/broadcast/_ui/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<script src="http://blogs.oreilly.com/broadcast/_ui/js/main.js" type="text/javascript" charset="utf-8"></script>
+<!-- removed -->
+
+<script language="JavaScript" type="text/javascript" src="http://broadcast.oreilly.com/mt.js"></script>
+<script language="JavaScript" type="text/javascript" src="http://www.oreillynet.com/engine.js"></script>
+
+
+
+	<script type="text/javascript" src="http://blogs.oreilly.com/scripts/highslide/highslide.js"></script>
+	<script type="text/javascript" src="http://blogs.oreilly.com/scripts/highslide/highslide-html.js"></script>
+
+<script type="text/javascript">    
+    hs.graphicsDir = 'http://blogs.oreilly.com/scripts/highslide/graphics/';
+    hs.outlineType = 'rounded-white';
+    hs.outlineWhileAnimating = true;
+</script>
+<script language="javascript" src="http://blogs.oreilly.com/rave/rave.js"></script>
+<script language="javascript" src="http://blogs.oreilly.com/menutest.js"></script>
+<!-- readspeak -->
+<script src="http://cdn.oreilly.com/scripts/readspeaker.js" type="text/javascript"></script>
+
+
+<link rel="stylesheet" href="http://broadcast.oreilly.com/styles.css?1" type="text/css" title="web" />
+<link rel="stylesheet" href="http://www.oreillynet.com/styles/chrome.css" type="text/css" title="web" />
+<link rel="shortcut icon" type="image/x-icon" href="http://oreilly.com/favicon.ico" />
+    
+    
+
+    <link rel="prev" href="http://broadcast.oreilly.com/2011/04/automating-your-workflow.html" title="Automating Your Workflow" />
+    
+    
+    <script type="text/javascript" src="http://broadcast.oreilly.com/mt.js"></script>
+
+
+<!-- MyBuys libraries and style sheet -->
+<link href="http://t.p.mybuys.com/css/mbstyles.css" type="text/css" rel="stylesheet" id="mybuysstyles">
+<script type="text/javascript" src="http://t.p.mybuys.com/js/mybuys3.js"></script>
+<script type="text/javascript" src="http://t.p.mybuys.com/clients/OREILLY/js/setup.js"></script>
+<!-- #MyBuys libraries and style sheet -->
+
+
+</head>
+
+<body onload="setMenu();" id="community" class="mt-archive-listing mt-entry-archive layout-twt">
+    <div id="container">
+        <div id="container-inner">
+            <div id="header-09">
+<ul class="accessibility-links">
+<li><a href="#content" title="skip navigation" accesskey="s">Skip navigation</a></li>
+<li><a href="#q" title="Skip to search" accesskey="4">Skip to search form</a></li>
+</ul>
+            <div id="navbar">	
+<ul id="nav">
+<li id="home"><a href="http://oreilly.com" accesskey="h">Home</a>
+<ul>
+<li><a href="http://oreilly.com/community/">Community</a></li>
+<li><a href="http://oreilly.com/events/">Events</a></li>
+<li><a href="http://oreilly.com/webcasts/">Webcasts</a></li>
+<li><a href="http://elists.oreilly.com/">Newsletters</a></li>
+</ul></li>	
+<li><a href="http://oreilly.com/store/">Shop</a>
+<ul>
+<li><a href="http://oreilly.com/store/newreleases.html">New</a></li>
+<li><a href="http://oreilly.com/store/upcoming.html">Upcoming</a></li>
+<li><a href="http://oreilly.com/store/bestsellers.html">Bestselling</a></li>
+<li><a href="http://oreilly.com/store/complete.html">Complete List</a></li>
+<li><a href="http://oreilly.com/store/publisher.html">By Publisher</a></li>
+<li><a href="http://oreilly.com/roughcuts/">Rough Cuts</a></li>
+<li><a href="http://oreilly.com/ebooks">Ebooks</a></li>
+<li><a href="http://oreilly.com/videos">Videos</a></li>
+<li><a href="http://oreilly.com/store/order.html">Order Info</a></li>
+</ul>
+</li>
+<li><a href="http://answers.oreilly.com/">Answers</a></li>
+<li><a href="http://radar.oreilly.com">Radar: News &amp; Commentary</a>
+<ul>
+<li><a href="http://radar.oreilly.com/data">Data</a></li>
+<li><a href="http://radar.oreilly.com/edu2">Edu 2.0</a></li>
+<li><a href="http://radar.oreilly.com/gov2">Gov 2.0</a></li>
+<li><a href="http://radar.oreilly.com/mobile">Mobile</a></li>
+<li><a href="http://radar.oreilly.com/programming">Programming</a></li>
+<li><a href="http://radar.oreilly.com/publishing">Publishing</a></li>
+<li><a href="http://radar.oreilly.com/web2">Web 2.0</a></li>
+</ul></li>
+
+<li><a href="http://safari.oreilly.com/?cid=orm-nav-global">Safari Books Online</a>
+<ul>
+<li><a href="http://my.safaribooksonline.com/home?cid=orm-nav-global&portal=oreilly">Safari Home</a></li>
+<li><a href="http://my.safaribooksonline.com/subscribe?cid=orm-nav-global&portal=oreilly">Subscribe</a></li>
+<li><a href="http://my.safaribooksonline.com/trial?cid=orm-nav-global&portal=oreilly">Free Trial</a></li>
+<li><a href="http://my.safaribooksonline.com/books?cid=orm-nav-global&portal=oreilly">Books</a></li>
+<li><a href="http://my.safaribooksonline.com/video?cid=orm-nav-global&portal=oreilly">Videos</a></li>
+</ul>
+</li>
+
+<li><a href="http://conferences.oreilly.com/">Conferences</a>
+<ul>
+<li><a href="http://conferences.oreilly.com/archive.csp">Archive</a></li>
+<li><a href="http://conferences.oreilly.com/contacts.csp">Team</a></li>
+<li><a href="http://www.oreillynet.com/conferences/blog/">News</a></li>
+</ul></li>
+<li><a href="http://training.oreilly.com/">Training</a>
+
+</li>
+<li><a href="http://www.oreillyschool.com/">School of Technology</a>
+<ul>
+<li><a href="https://oreillyschool.com/enroll/">Enroll</a></li>
+<li><a href="https://oreillyschool.com/career/">Your Career</a></li>
+<li><a href="https://oreillyschool.com/why/">Why OST</a></li>
+<li><a href="https://oreillyschool.com/courses/">Courses&nbsp;&amp;&nbsp;Certificates</a></li>
+<li><a href="https://oreillyschool.com/contact.php">Contact</a></li>
+<li><a href="https://oreillyschool.com/student/">Student Sign In</a></li>
+
+</ul></li>
+</ul>
+
+<ul id="account-actions">
+<li><a href="https://members.oreilly.com/" class="acct">Your Account</a></li>
+<li><a href="https://epoch.oreilly.com/shop/cart.orm" class="cart">View Cart</a></li>
+</ul>
+</div>
+
+	
+<div id="header">	
+
+<a href="http://oreilly.com/community/"><h1>O'Reilly Community</h1></a>
+
+<div id="search-box" class="yui-skin-sam">
+
+<form method="get" action="http://search.oreilly.com" id="search-form" name="searchform">
+
+<fieldset>
+<span id="search-input">
+<span id="search-field"><input style="//height: 18px;" id="q" name="q" type="text" maxlength="64" accesskey="s" value="" /></span>
+<span id="search-button">
+<input class="button" type="submit" value="SEARCH" onclick="return searchverif();" />
+</span>
+</span>
+<span class="clear"></span>
+<div id="autocomplete"></div>
+</fieldset>
+</form>
+</div>
+
+</div>	
+
+<div id="subnav">
+<ul>
+<li><a href="http://oreilly.com/authors/">Authors</a></li>
+<li><a href="http://oreilly.com/blogs/" class="selected">Blogs</a></li>
+<li><a href="http://forums.oreilly.com">Forums</a></li>
+<li><a href="http://ug.oreilly.com/">User Groups</a></li>
+<li><a href="http://members.oreilly.com">Membership</a></li>
+<li><a href="http://oreilly.com/community/guidelines.html">Community Guidelines</a></li>
+</ul>
+</div>
+            </div>
+            <div id="content-09">
+            <div id="content">
+                <div id="content-inner">
+                    <div id="alpha">
+                        <div id="alpha-inner">
+
+
+
+<div id="entry-46231" class="entry-asset asset hentry">
+
+ <!-- toolbar -->
+<div class="floater" style="float: right; display:block; text-align:left;">
+
+<table class="navbar" width="180">
+<!-- print -->
+<tr height="20"><td align="right">
+<a href="#" style="text-decoration:none" onclick="window.open('http://broadcast.oreilly.com/print/46231.html','print','width=800,height=600,menubar=no,status=no,location=yes,toolbar=yes,scrollbars=yes'); return false;"><img src="http://cachefly.oreilly.com/news/images/printtag.jpg" style="padding-left: 90px;padding-right: 5px;" border="0" />Print</a>
+</td></tr>
+<!--twitter button -->
+<!--tr height="26"><td align="right">
+<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="oreillymedia" data-related="radar:radar.oreilly.com">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+</td></tr-->
+<!-- listen -->
+<tr height="20"><td align="right">
+<a accesskey="L" href="http://app.readspeaker.com/cgi-bin/rsent?customerid=14&amp;lang=en_us&amp;url=http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html" onclick="readspeaker(this.href+'&amp;selectedhtml='+escape(selectedString), 'rs_46231'); return false;" style="text-decoration:none;" ><img border=0 src='http://cachefly.oreilly.com/news/images/listentag.jpg' style="padding-left: 90px; padding-right: 5px;" border="0" alt='Listen to the text content of this page'>Listen</a></span><div class="readspeak"><div id="rs_46231" style="padding-right: 4px; text-align: right;"></div></div>
+		</td></tr>
+<!-- share -->
+    <tr height="20">
+      <td align="right">
+         <div id="share-options" style="padding:3px 0 3px 90px;">
+<script type="text/javascript" src="http://w.sharethis.com/button/sharethis.js#publisher=16098316-763b-41fc-a31d-7bbadcfcf894&amp;type=website&amp;embeds=true&amp;style=rotate&amp;send_services=email%2Caim%2Csms&amp;post_services=twitter%2Cfriendfeed%2Cfacebook%2Cdigg%2Cdelicious%2Creddit%2Cslashdot%2Cgoogle_bmarks%2Cblogger%2Ctypepad%2Cstumbleupon%2Cwordpress%2Cwindows_live%2Cnewsvine%2Clinkedin%2Cmyspace%2Ctechnorati"></script>
+           </div>
+</td></tr>      
+  </table>
+
+</div><!-- floater#-->
+
+
+<!-- #toolbar -->
+<div class="asset-header" style="float: left; display:block; width: 300px;">
+        <h1 id="page-title" class="asset-name entry-title"><!-- RSPEAK_START -->The AWS Outage: The Cloud's Shining Moment<!-- RSPEAK_STOP --></h1>
+
+       <div class="asset-meta">
+	
+<img src="http://oreilly.com/images/people/weblogs/george_reese.jpg" style="padding-right: 5px; padding-top: 2px; float: left; border: none;" alt="" /><!-- RSPEAK_START -->By <a href="http://www.oreillynet.com/pub/au/429">George Reese</a><br />April 23, 2011<!-- RSPEAK_STOP --> <span class="separator">|</span> <a href="http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html#comments">Comments: 20</a><br />
+
+
+
+<p class="asset-meta"><span class="social-counters">
+<span class="retweet"><a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-url="http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html" data-text="The AWS Outage: The Cloud's Shining Moment" data-via="oreillymedia" data-related="radar:radar.oreilly.com">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script></span>
+<span class="like"><iframe src="http://www.facebook.com/plugins/like.php?href=http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html&amp;layout=button_count&amp;show_faces=false&amp;width=200&amp;action=like&amp;colorscheme=light&amp;height=20" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:110px; height:20px;" allowTransparency="true"></iframe></span>
+</span></p>
+</div>
+
+    </div>
+    <div class="asset-content entry-content">	
+        <div class="asset-body">
+
+
+
+       
+
+
+
+
+ 
+
+<!-- RSPEAK_START -->
+            <p>
+So many cloud pundits are piling on to the misfortunes of <a href="http://aws.amazon.com">Amazon Web Services</a> this week as a response to the massive failures in the AWS Virginia region. If you think this week exposed weakness in the cloud, you don't get it: it was the cloud's shining moment, exposing the strength of cloud computing.<span class="mt-enclosure mt-enclosure-image" style="display: inline;"><a href="http://broadcast.oreilly.com/rescue.jpg"><img alt="" src="http://broadcast.oreilly.com/assets_c/2011/04/rescue-thumb-150x99.jpg" width="150" height="99" class="mt-image-right" style="float: right; margin: 5px 5px 20px 20px;" /></a></span>
+</p>
+<p>
+In short, if your systems failed in the Amazon cloud this week, it wasn't Amazon's fault. You either deemed an outage of this nature an acceptable risk or you failed to design for Amazon's cloud computing model. The strength of cloud computing is that it puts control over application availability in the hands of the application developer and not in the hands of your IT staff, data center limitations, or a managed services provider.
+</p>
+<p>
+The AWS outage highlighted the fact that, in the cloud, you control your SLA in the cloud&mdash;not AWS.
+</p>
+<p><b>The Dueling Models of Cloud Computing</b></p>
+<p>
+Until this past week, there's been a mostly silent war ranging out there between two dueling architectural models of cloud computing applications: "design for failure" and traditional. This battle is about how we ultimately handle availability in the context of cloud computing. 
+</p>
+<p>
+The Amazon model is the <em>"design for failure"</em> model. Under the "design for failure" model, combinations of your software and management tools take responsibility for application availability. The actual infrastructure availability is entirely irrelevant to your application availability. 100% uptime should be achievable even when your cloud provider has a massive, data-center-wide outage.
+</p>
+<p>
+Most cloud providers follow some variant of the "design for failure" model. A handful of providers, however, follow the traditional model in which the underlying infrastructure takes ultimate responsibility for availability. It doesn't matter how dumb your application is, the infrastructure will provide the redundancy necessary to keep it running in the face of failure. The clouds that tend to follow this model are <a href="http://www.vmware.com/products/vcloud/overview.html">vCloud</a>-based clouds that leverage the capabilities of <a href="http://www.vmware.com">VMware</a> to provide this level of infrastructural support.
+</p>
+<p>
+The advantage of the traditional model is that any application can be deployed into it and assigned the level of redundancy appropriate to its function. The downside is that the traditional model is heavily constrained by geography. It would not have helped you survive this level of cloud provider (public or private) outage.
+</p>
+<p>
+The advantage of the "design for failure" model is that the application developer has total control of their availability with only their data model and volume imposing geographical limitations. The downside of the "design for failure" model is that you must "design for failure" up front.
+</p>
+<p><b>The Five Levels of Redundancy</b></p>
+
+<p>In a cloud computing environment, there are five possible levels of redundancy:</p>
+
+<ul>
+	<li>Physical</li>
+	<li>Virtual resource</li>
+	<li>Availability zone</li>
+	<li>Region</li>
+	<li>Cloud</li>
+</ul>
+<p>
+When I talk about redundancy, I'm talking about a level of redundancy that enables you to survive failures with zero downtime. You have the redundancy that simply lets the system keep moving when faced with failures.
+</p>
+<p>
+Physical redundancy encompasses all traditional "n+1" concepts: redundant hardware, data center redundancy, the ability to do vMotion or equivalents, and the ability to replicate an entire network topology in the face of massive infrastructural failure. 
+</p>
+<p>
+Traditional models end at physical redundancy. "Design for failure" doesn't care about physical redundancy. Instead, it allocates redundant virtual resources like virtual machines so that the failure of the underlying infrastructure supporting one virtual machine doesn't impact the operations of the other unless they are sharing the failed infrastructural component.
+</p>
+<p>
+The fault tolerance of virtual redundancy generally ends at the cluster/cabinet/data center level (depending on your virtualization topology). To achieve better redundancy, you spread your virtualization resources across multiple availability zones. At this time, I believe only Amazon gives you full control over your availability zone deployments. When you have redundant resources across multiple availability zones, you can survive the complete loss of (n-1) availability zones (where n is the number of availability zones in which you are redundant).
+</p>
+<p>
+Until this week, no one has needed anything more than availability zone redundancy. If you had redundancy across availability zones, you would have survived every outage suffered to date in the Amazon cloud. As we noted this week, however, an outage can take out an entire cloud region.
+</p>
+<p>
+Regional redundancy enables you to survive the loss of an entire cloud region. If you had regional redundancy in place, you would have come through the recent outage without any problems except maybe an increased workload for your surviving virtual resources. Of course, regional redundancy won't let you survive business failures of your cloud provider.
+</p>
+<p>
+Cloud redundancy enables you to survive the complete loss of a cloud provider.
+</p>
+<p><b>Applied "Design for Failure"</b></p>
+<p>
+In presentations, I refer to the "design for failure" model as the AWS model. AWS doesn't have any particular monopoly on this model, but their lack of persistent virtual machines pushes this model to its extreme. Actually, best practices for building greenfield applications in most clouds fit under this model.
+</p>
+<p>
+The fundamental principle of "design for failure" is that the application is responsible for its own availability, regardless of the reliability of the underlying cloud infrastructure. In other word, you should be able to deploy a "design for failure" application and achieve 99.9999% uptime (really, 100%) leveraging any cloud infrastructure. It doesn't matter if the underlying infrastructural components have only a 90% uptime rating. It doesn't matter if the cloud has a complete data center meltdown that takes it entirely off the Internet.
+</p>
+<p>
+There are several requirements for "design for failure":
+</p>
+<ul>
+	<li>Each application component must be deployed across redundant cloud components, ideally with minimal or no common points of failure</li>
+	<li>Each application component must make no assumptions about the underlying infrastructure&mdash;it must be able to adapt to changes in the infrastructure without downtime</li>
+	<li>Each application component should be partition tolerant&mdash;in other words, it should be able to survive network latency (or loss of communication) among the nodes that support that component</li>
+	<li>Automation tools must be in place to orchestrate application responses to failures or other changes in the infrastructure (full disclosure, I am CTO of a company that sells such automation tools, <a href="http://www.enstratus.com">enStratus</a>)</li>
+</ul>
+<p>
+Applications built with "design for failure" in mind don't need SLAs. They don't care about the lack of control associated with deploying in someone else's infrastructure. By their very nature, they will achieve uptimes you can't dream of with other architectures and survive extreme failures in the cloud infrastructure.
+</p>
+<p>
+Let's look at a design for failure model that would have come through the AWS outage in flying colors:
+</p>
+<ul>
+	<li>Dynamic DNS pointing to elastic load balancers in Virginia and California</li>
+	<li>Load balancers routing to web applications in at least two zones in each region</li>
+	<li>A <a href="http://en.wikipedia.org/wiki/NoSQL_(concept)">NoSQL</a> data store with the ring spread across all web application availability zones in both Virginia and California</li>
+	<li>A cloud management tool (running outside the cloud!)  monitoring this infrastructure for failures and handling reconfiguration</li>
+</ul>
+<p>
+Upon failure, your California systems and the management tool take over. The management tool reconfigures DNS to remove the Virginia load balancer from the mix. All traffic is now going to California. The web applications in California are stupid and don't care about Virginia under any circumstance, and your NoSQL system is able to deal with the lost Virginia systems. Your cloud management tool attempts to kill off all Virginia resources and bring up resources in California to replace the load.
+</p>
+<p>
+Voila, no humans, no 2am calls, and no outage! Extra bonus points for "bursting" into Singapore, Japan, Ireland, or another cloud! When Virginia comes back up, the system may or may not attempt to rebalance back into Virginia.
+</p>
+<p><b>Relational Databases</b></p>
+<p>
+OK, so I neatly sidestepped the issue of relational databases. Things are obviously not so clean with relational database systems and the NoSQL system almost certainly would have lost some minimal amounts of data in the cut-over. If that data loss is acceptable, you better not be running a relational database system. If it is not acceptable, then you need to be running a relational database system.
+</p>
+<p>
+A NoSQL database (and I hate the term NoSQL with the passion of a billion white hot suns) <a href="http://en.wikipedia.org/wiki/CAP_theorem">trades off data consistency for something called partition tolerance</a>. The layman's description of partition tolerance is basically the ability to split your data across multiple, geographically distinct partitions. A relational system can't give you that. A NoSQL system can't give you data consistency. Pick your poison.
+</p>
+<p>
+Sometimes that poison must be a relational database. And that means we can't easily partition our data across California and Virginia. You now need to look at several different options:
+</p>
+
+<ul>
+	<li>Master/slave across regions with automated slave promotion using your cloud management tool</li>
+	<li>Master/slave across regions with manual slave promotion </li>
+	<li>Regional data segmentation with a master/master configuration and automated failover</li>
+</ul>
+<p>
+There are likely a number of other options depending on your data model and DBA skillset. All of them involve potential data loss when you recover systems to the California region, as well as some basic level of downtime. All, however, protect your data consistency during normal operations&mdash;something the NoSQL option doesn't provide you. The choice of automated vs. manual depends on whether you want a human making data loss acceptance decisions. You may particularly want a human involved in that decision in a scenario like what happened this week because only a human really can judge, "How confident am I that AWS will have the system up in the next (INSERT AN INTERVAL HERE)?"
+</p>
+
+<p><b>The Traditional Model</b></p>
+<p>
+As its name implies, the "design for failure" requires you to design for failure. It therefore significantly constrains your application architecture. While most of these constraints are things you should be doing anyways, most legacy applications just aren't built that way. Of course, "design for failure" is also heavily biased towards NoSQL databases which often are not appropriate in an enterprise application context.
+</p>
+<p>
+The traditional model will support any kind of application, even a "design for failure" application. The problem is that it's often harder to build "design for failure" systems on top of the traditional model because most current implementations of the traditional model simply lack the flexibility and tools that make "design for failure" work in other clouds.
+</p>
+
+<p><b>Control, SLAs, Cloud Models, and You</b></p>
+<p>
+When you make the move into the cloud, you are doing so exactly because you want to give up control over the infrastructure level. The knee-jerk reaction is to look for an SLA from your cloud provider to cover this lack of control. The better reaction is to deploy applications in the cloud designed to make your lack of control irrelevant. It's not simply an availability issue; it also extends to other aspects of cloud computing like security and governance. You don't need no stinking SLA.
+</p>
+<p>
+As I stated earlier, this outage highlights the power of cloud computing. What about Netflix, an AWS customer that kept on going because they had proper "design for failure"? Try doing that in your private IT infrastructure with the complete loss of a data center. What about another AWS/enStratus startup customer who did not design for failure, but took advantage of the cloud DR capabilities to rapidly move their systems to California? What startup would ever have been able to relocate their entire application across country within a few hours of the loss of their entire data center without already paying through the nose for it?
+</p>
+<p>
+These kinds of failures don't expose the weaknesses of the cloud&mdash;they expose why the cloud is so important.
+</p>
+<!-- RSPEAK_STOP -->        
+
+
+    </div>
+    <br clear="left"><div class="asset-footer">
+        
+                
+        
+                <div class="entry-tags">
+    <h4 class="entry-tags-header">Tags<span class="delimiter">:</span></h4>
+    <ul class="entry-tags-list">
+        <li class="entry-tag"><a href="http://oreilly.com/blogs/tags.csp?tag=aws" rel="tag">aws</a><span class="delimiter">,</span></li> <li class="entry-tag"><a href="http://oreilly.com/blogs/tags.csp?tag=cloudcomputing" rel="tag">cloudcomputing</a><span class="delimiter">,</span></li> <li class="entry-tag"><a href="http://oreilly.com/blogs/tags.csp?tag=designforfailure" rel="tag">designforfailure</a><span class="delimiter">,</span></li> <li class="entry-tag"><a href="http://oreilly.com/blogs/tags.csp?tag=NoSQL" rel="tag">NoSQL</a></li>
+    </ul>
+</div>
+
+
+<br />
+
+    </div>
+</div>
+
+</div>
+
+
+
+
+
+
+<div style="width: 100%; margin-right: 0px; margin-left: 0px; padding-right: 0px; padding-left: 0px;"><h3>You might also be interested in:</h3>
+<div style="width: 100%; margin-right: 0px; margin-left: 0px; padding-right: 0px; padding-left: 0px;">
+<!-- MyBuys Web Recommendation Zone -->
+<div mybuyszone="4"></div>
+<!-- End MyBuys Web Recommendation Zone -->
+</div>
+</div>
+
+<div class="linebreak">
+
+<div class="noindex">
+<div id="comments" class="comments">
+
+
+
+<h2 class="comments-header">20 Comments</h2>
+<div class="comments-content">
+    
+     <!-- If comment doesn't have a top-level-parent -->
+            <div  id="comment-7184732" class="comment">
+<div class="inner">
+<div class="comment-header">
+<div class="asset-meta">
+<span class="byline">
+By 
+
+<span class="vcard author">Razi Sharir</span>
+
+on <a href="http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html#comment-7184732"><abbr class="published" title="2011-04-23T11:11:48-08:00">April 23, 2011 11:11 AM</abbr></a>
+
+| <a title="Reply" href="javascript:void(0);" onclick="mtReplyCommentOnClick(7184732, 'Razi Sharir')">Reply</a>
+
+</span>
+</div>
+</div>
+<div class="comment-content">
+<p>Couldn't agree more.  When we designed Xeround SQL Cloud Database-as-a-service; we looked at all the layers you listed for alternate DRP design: Physical > Virtual resource > Availability zone > Region > Cloud.  <br />
+With that in mind, we took a cloud agnostic approach enabling our users to run their databases on any public cloud - Amazon (East, Europe, same/multi zone), Rackspace and soon many other IaaS worldwide, private cloud (Vmware vCloud)… In fact we also support a similar approach PaaS wise – support Heroku, CloudControll and quite a few others coming soon.<br />
+We know running a dB in the cloud is tricky and took the DBaaS direction, Acunna Matata worry free philosophy; auto everything – hilling, elastic scalability, distribution, even more front end SQL/NoSQL APIs coming soon.<br />
+Try us at xeround.com (razi Sharir<br />
+</p>
+</div>
+</div>
+</div>
+
+
+        
+    
+    
+
+
+     <!-- If comment doesn't have a top-level-parent -->
+            <div  id="comment-7185990" class="comment">
+<div class="inner">
+<div class="comment-header">
+<div class="asset-meta">
+<span class="byline">
+By 
+
+<span class="vcard author">Will</span>
+
+on <a href="http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html#comment-7185990"><abbr class="published" title="2011-04-23T13:34:18-08:00">April 23, 2011  1:34 PM</abbr></a>
+
+| <a title="Reply" href="javascript:void(0);" onclick="mtReplyCommentOnClick(7185990, 'Will')">Reply</a>
+
+</span>
+</div>
+</div>
+<div class="comment-content">
+<p>I thought the failure was that multiple availability zones died simultaneously, something that by design and per Amazon's docs should never happen short of a hurricane in Virginia. Note that out is exponentially harder to distribute your app across not only AZs but geographical areas as well: high speed links connect AZs within a geo, but going from one geo to another is extremely slow and not realtime.</p>
+
+<p>Of course you design for failure, it happens every day on AWS. But can you design around multiple datacenters (availability zones) dying simultaneously? When AWS told you not to worry about that eventuality? Probably not without downtime and some serious compromises.</p>
+</div>
+</div>
+</div>
+
+
+        
+    
+    
+
+
+     <!-- If comment doesn't have a top-level-parent -->
+            <div  id="comment-7186063" class="comment">
+<div class="inner">
+<div class="comment-header">
+<div class="asset-meta">
+<span class="byline">
+By 
+
+<span class="vcard author">Alexander Muse</span>
+
+on <a href="http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html#comment-7186063"><abbr class="published" title="2011-04-23T13:43:25-08:00">April 23, 2011  1:43 PM</abbr></a>
+
+| <a title="Reply" href="javascript:void(0);" onclick="mtReplyCommentOnClick(7186063, 'Alexander Muse')">Reply</a>
+
+</span>
+</div>
+</div>
+<div class="comment-content">
+<p>It was a surprise that so many popular web services went down when Amazon went down. We always assumed one of two things would happen: that our infrastructure in the Amazon cloud would fail or our infrastructure in our data center would fail (hopefully not at the same time). <br />
+</p>
+</div>
+</div>
+</div>
+
+
+        
+    
+    
+
+
+     <!-- If comment doesn't have a top-level-parent -->
+            <div  id="comment-7186323" class="comment">
+<div class="inner">
+<div class="comment-header">
+<div class="asset-meta">
+<span class="byline">
+By 
+
+<span class="vcard author">mike</span>
+
+on <a href="http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html#comment-7186323"><abbr class="published" title="2011-04-23T14:07:31-08:00">April 23, 2011  2:07 PM</abbr></a>
+
+| <a title="Reply" href="javascript:void(0);" onclick="mtReplyCommentOnClick(7186323, 'mike')">Reply</a>
+
+</span>
+</div>
+</div>
+<div class="comment-content">
+<p>The problem is that once EVERYONE falls back to a service in another availability zone, that zone suddenly has to handle twice the load (probably a lot more when Virginia goes down, because it's generally believed to have the most instances).  We saw pretty heavy slowdown across zones even with only a handful of people following this approach. You need to either bring another provider into the mix, or just have faith that AWS keeps piles and piles of spare capacity.</p>
+</div>
+</div>
+</div>
+
+
+        
+    
+    
+
+
+     <!-- If comment doesn't have a top-level-parent -->
+            <div  id="comment-7186642" class="comment">
+<div class="inner">
+<div class="comment-header">
+<div class="asset-meta">
+<span class="byline">
+By 
+
+<span class="vcard author">BiggieBig</span>
+
+on <a href="http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html#comment-7186642"><abbr class="published" title="2011-04-23T14:35:25-08:00">April 23, 2011  2:35 PM</abbr></a>
+
+| <a title="Reply" href="javascript:void(0);" onclick="mtReplyCommentOnClick(7186642, 'BiggieBig')">Reply</a>
+
+</span>
+</div>
+</div>
+<div class="comment-content">
+<p>More bullshit. </p>
+</div>
+</div>
+</div>
+
+
+         <!-- Loop through the reply comments -->
+            
+            <div style="margin-left: 20px;">
+            
+            <div  id="comment-7188855" class="comment comment-reply">
+<div class="inner">
+<div class="comment-header">
+<div class="asset-meta">
+<span class="byline">
+By 
+
+<span class="vcard author">jerhewet</span> in reply to <a href="http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html#comment-7186642">comment from BiggieBig</a>
+
+on <a href="http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html#comment-7188855"><abbr class="published" title="2011-04-23T17:14:05-08:00">April 23, 2011  5:14 PM</abbr></a>
+
+| <a title="Reply" href="javascript:void(0);" onclick="mtReplyCommentOnClick(7188855, 'jerhewet')">Reply</a>
+
+</span>
+</div>
+</div>
+<div class="comment-content">
+<p>Ayep.  What BiggieBig said.  The cloud fanatics really do need to wake the f__k up and smell the f__ckin' coffee.</p>
+</div>
+</div>
+</div>
+
+
+             <!-- For each reply comment, recursively display any reply comments -->    
+            
+         <!-- Loop through the reply comments -->
+            
+            <div  id="comment-7189537" class="comment comment-reply">
+<div class="inner">
+<div class="comment-header">
+<div class="asset-meta">
+<span class="byline">
+By 
+
+<span class="vcard author">ronroddam</span> in reply to <a href="http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html#comment-7186642">comment from BiggieBig</a>
+
+on <a href="http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html#comment-7189537"><abbr class="published" title="2011-04-23T18:22:21-08:00">April 23, 2011  6:22 PM</abbr></a>
+
+| <a title="Reply" href="javascript:void(0);" onclick="mtReplyCommentOnClick(7189537, 'ronroddam')">Reply</a>
+
+</span>
+</div>
+</div>
+<div class="comment-content">
+<p>Succinct, not much substance or thoughtful consideration but succinct.</p>
+</div>
+</div>
+</div>
+
+
+             <!-- For each reply comment, recursively display any reply comments -->    
+            
+            </div>
+            
+        
+    
+    
+
+
+     <!-- If comment doesn't have a top-level-parent -->
+            <div  id="comment-7187138" class="comment">
+<div class="inner">
+<div class="comment-header">
+<div class="asset-meta">
+<span class="byline">
+By 
+
+<span class="vcard author">Justin Santa Barbara</span>
+
+on <a href="http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html#comment-7187138"><abbr class="published" title="2011-04-23T15:20:15-08:00">April 23, 2011  3:20 PM</abbr></a>
+
+| <a title="Reply" href="javascript:void(0);" onclick="mtReplyCommentOnClick(7187138, 'Justin Santa Barbara')">Reply</a>
+
+</span>
+</div>
+</div>
+<div class="comment-content">
+<p>AWS previously assured us that multiple Availability Zones wouldn't realistically fail at the same time.  Now that proved to be untrue, you choose to say "Ah - you shouldn't have believed AWS, you should have been using multiple regions"  Presumably when the next outage hits both US regions you'll say "Ah - of course you should have used the EU and Asia regions as well".</p>
+
+<p>We should recognize AWS as a single point of failure and look at hosting across multiple providers.  Fool me once, shame on you; fool me twice, shame on me.</p>
+
+<p>This does require sophisticated management tools like enStratus, but you should use those tools to avoid putting all your eggs into the AWS basket.</p>
+
+<p>I'm not sure that the rest of the technology stack has necessarily caught up to this model though - in particular NoSQL databases aren't the panacea you appear to believe them to be.  Hopefully all the pieces of the technology stack will evolve.<br />
+</p>
+</div>
+</div>
+</div>
+
+
+         <!-- Loop through the reply comments -->
+            
+            <div style="margin-left: 20px;">
+            
+            <div  id="comment-7187181" class="comment comment-reply">
+<div class="inner">
+<div class="comment-header">
+<div class="asset-meta">
+<span class="byline">
+By 
+
+<span class="vcard author">George Reese</span> in reply to <a href="http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html#comment-7187138">comment from Justin Santa Barbara</a>
+
+on <a href="http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html#comment-7187181"><abbr class="published" title="2011-04-23T15:25:42-08:00">April 23, 2011  3:25 PM</abbr></a>
+
+| <a title="Reply" href="javascript:void(0);" onclick="mtReplyCommentOnClick(7187181, 'George Reese')">Reply</a>
+
+</span>
+</div>
+</div>
+<div class="comment-content">
+<p>AWS has never in any conversation I have ever had said that multiple availability zones would not realistically fail at the same time. If they felt that way, don't you think they'd have an SLA better than 99.9%?</p>
+
+<p>Of course, if you want to survive the failure of multiple availability zones, you should spread yourself across regions. I don't understand why this is so hard for people to understand.</p>
+
+<p>Similarly, yes, you should have some ability to migrate your systems into another cloud. I don't think actual technical loss of all AWS regions (or even multiple regions) can happen absent of nuclear war or asteroid strike, but companies do go out of business/get sued/etc.</p>
+</div>
+</div>
+</div>
+
+
+             <!-- Loop through the reply comments -->
+            
+            <div style="margin-left: 20px;">
+            
+            <div  id="comment-7187433" class="comment comment-reply">
+<div class="inner">
+<div class="comment-header">
+<div class="asset-meta">
+<span class="byline">
+By 
+
+<span class="vcard author">Justin Santa Barbara</span> in reply to <a href="http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html#comment-7187181">comment from George Reese</a>
+
+on <a href="http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html#comment-7187433"><abbr class="published" title="2011-04-23T15:45:36-08:00">April 23, 2011  3:45 PM</abbr></a>
+
+| <a title="Reply" href="javascript:void(0);" onclick="mtReplyCommentOnClick(7187433, 'Justin Santa Barbara')">Reply</a>
+
+</span>
+</div>
+</div>
+<div class="comment-content">
+<p>From the EC2 homepage (http://aws.amazon.com/ec2/):<br />
+"Availability Zones are distinct locations that are engineered to be insulated from failures in other Availability Zones and provide inexpensive, low latency network connectivity to other Availability Zones in the same Region. By launching instances in separate Availability Zones, you can protect your applications from failure of a single location."</p>
+
+<p>From the EC2 FAQ (http://aws.amazon.com/ec2/faqs/):<br />
+"Q: How isolated are Availability Zones from one another?<br />
+Each availability zone runs on its own physically distinct, independent infrastructure, and is engineered to be highly reliable. Common points of failures like generators and cooling equipment are not shared across Availability Zones. Additionally, they are physically separate, such that even extremely uncommon disasters such as fires, tornados or flooding would only affect a single Availability Zone."</p>
+
+<p>Seems pretty clear to me that multiple AZ failure is supposed to be unrealistic except in the case of disasters, and AWS even explicitly state that it would have to be a large scale disaster, not just a "measly" fire, tornado or flood :-)</p>
+
+<p>In addition, AWS themselves engineered their own solutions reflecting this assumption (e.g. RDS Multi-AZ is multi-AZ, not multi-region)</p>
+
+<p>Of course, you're right - AWS was over-promising here; we should have ignored what they stated and used multiple regions.  But it's the same people and the same software that run those multiple regions, so I don't see understand how you continue to have faith that multiple regions won't go down except in extraordinary circumstances.</p>
+
+<p>I think we're in agreement that you can't trust a single AZ; we've learned in this outage that you can't trust a single Region.  We only disagree in that you continue to have faith in multiple AWS regions, whereas I have no reason to believe that e.g. an AWS software bug won't get deployed to all regions, or that a rogue AWS employee won't somehow shut down all the regions.</p>
+
+<p>As for your conversations with AWS, if they were in fact privately saying to you that multiple AZ failure were likely, while publicly saying the opposite, I think you should publish that story.</p>
+</div>
+</div>
+</div>
+
+
+             <!-- For each reply comment, recursively display any reply comments -->    
+            
+            </div>
+            
+         <!-- For each reply comment, recursively display any reply comments -->    
+            
+            </div>
+            
+        
+    
+    
+
+
+     <!-- If comment has a parent comment. We ignore this, as we just want the top-level-parent comments -->
+        
+    
+
+
+     <!-- If comment doesn't have a top-level-parent -->
+            <div  id="comment-7187212" class="comment">
+<div class="inner">
+<div class="comment-header">
+<div class="asset-meta">
+<span class="byline">
+By 
+
+<span class="vcard author">JL</span>
+
+on <a href="http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html#comment-7187212"><abbr class="published" title="2011-04-23T15:27:37-08:00">April 23, 2011  3:27 PM</abbr></a>
+
+| <a title="Reply" href="javascript:void(0);" onclick="mtReplyCommentOnClick(7187212, 'JL')">Reply</a>
+
+</span>
+</div>
+</div>
+<div class="comment-content">
+<p>This was foretold decades ago in the movie Animal House:</p>
+
+<p>"You f****ed up. You trusted us!"</p>
+
+<p>I really like how various vendors jumped in these comments saying how their products would have prevented it. </p>
+
+<p>a.k.a. see "Animal House".</p>
+</div>
+</div>
+</div>
+
+
+        
+    
+    
+
+
+     <!-- If comment doesn't have a top-level-parent -->
+            <div  id="comment-7187298" class="comment">
+<div class="inner">
+<div class="comment-header">
+<div class="asset-meta">
+<span class="byline">
+By 
+
+<span class="vcard author">John Duhring</span>
+
+on <a href="http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html#comment-7187298"><abbr class="published" title="2011-04-23T15:33:32-08:00">April 23, 2011  3:33 PM</abbr></a>
+
+| <a title="Reply" href="javascript:void(0);" onclick="mtReplyCommentOnClick(7187298, 'John Duhring')">Reply</a>
+
+</span>
+</div>
+</div>
+<div class="comment-content">
+<p>We documented our experience at bitmenu here:</p>
+
+<p><a href="http://blog.bitmenu.com/2011/04/production-push-redundancy-is.html" rel="nofollow">http://blog.bitmenu.com/2011/04/production-push-redundancy-is.html</a></p>
+
+<p>An event like this makes us value the new infrastructure even more.</p>
+</div>
+</div>
+</div>
+
+
+        
+    
+    
+
+
+     <!-- If comment has a parent comment. We ignore this, as we just want the top-level-parent comments -->
+        
+    
+
+
+     <!-- If comment doesn't have a top-level-parent -->
+            <div  id="comment-7187684" class="comment">
+<div class="inner">
+<div class="comment-header">
+<div class="asset-meta">
+<span class="byline">
+By 
+
+<span class="vcard author">iMeerkatCS</span>
+
+on <a href="http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html#comment-7187684"><abbr class="published" title="2011-04-23T16:04:01-08:00">April 23, 2011  4:04 PM</abbr></a>
+
+| <a title="Reply" href="javascript:void(0);" onclick="mtReplyCommentOnClick(7187684, 'iMeerkatCS')">Reply</a>
+
+</span>
+</div>
+</div>
+<div class="comment-content">
+<p>I think Amazon should stick with selling everything under the sun except cloud web services. Leave google to master the cloud much like they master everything else on the internet. EC2 FAiL :D</p>
+</div>
+</div>
+</div>
+
+
+         <!-- Loop through the reply comments -->
+            
+            <div style="margin-left: 20px;">
+            
+            <div  id="comment-7188110" class="comment comment-reply">
+<div class="inner">
+<div class="comment-header">
+<div class="asset-meta">
+<span class="byline">
+By 
+
+<span class="vcard author">George Reese</span> in reply to <a href="http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html#comment-7187684">comment from iMeerkatCS</a>
+
+on <a href="http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html#comment-7188110"><abbr class="published" title="2011-04-23T16:30:35-08:00">April 23, 2011  4:30 PM</abbr></a>
+
+| <a title="Reply" href="javascript:void(0);" onclick="mtReplyCommentOnClick(7188110, 'George Reese')">Reply</a>
+
+</span>
+</div>
+</div>
+<div class="comment-content">
+<p>Because Google has such a stellar track record?</p>
+</div>
+</div>
+</div>
+
+
+             <!-- For each reply comment, recursively display any reply comments -->    
+            
+            </div>
+            
+        
+    
+    
+
+
+     <!-- If comment doesn't have a top-level-parent -->
+            <div  id="comment-7187775" class="comment">
+<div class="inner">
+<div class="comment-header">
+<div class="asset-meta">
+<span class="byline">
+By 
+
+<span class="vcard author">NotImpressed</span>
+
+on <a href="http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html#comment-7187775"><abbr class="published" title="2011-04-23T16:08:53-08:00">April 23, 2011  4:08 PM</abbr></a>
+
+| <a title="Reply" href="javascript:void(0);" onclick="mtReplyCommentOnClick(7187775, 'NotImpressed')">Reply</a>
+
+</span>
+</div>
+</div>
+<div class="comment-content">
+<p>Your check from Amazon is the mail, tech shill guy. </p>
+</div>
+</div>
+</div>
+
+
+        
+    
+    
+
+
+     <!-- If comment has a parent comment. We ignore this, as we just want the top-level-parent comments -->
+        
+    
+
+
+     <!-- If comment doesn't have a top-level-parent -->
+            <div  id="comment-7188393" class="comment">
+<div class="inner">
+<div class="comment-header">
+<div class="asset-meta">
+<span class="byline">
+By 
+
+<span class="vcard author">Eric</span>
+
+on <a href="http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html#comment-7188393"><abbr class="published" title="2011-04-23T16:44:01-08:00">April 23, 2011  4:44 PM</abbr></a>
+
+| <a title="Reply" href="javascript:void(0);" onclick="mtReplyCommentOnClick(7188393, 'Eric')">Reply</a>
+
+</span>
+</div>
+</div>
+<div class="comment-content">
+<p>"The strength of cloud computing is that it puts control over application availability in the hands of the application developer and not in the hands of your IT staff, data center limitations, or a managed services provider"</p>
+
+<p>Sadly, no.  That the developers are in charge of this stuff is why so many sites were down completely.  They're terrible at it, don't value it, and even when they try to roll it out they do it poorly.</p>
+
+<p>An IT guy would have spent 15 minutes on day 1 thinking about disaster recovery.  A developer always wants to do it tomorrow and tomorrow, as we all know, never comes.</p>
+</div>
+</div>
+</div>
+
+
+        
+    
+    
+
+
+     <!-- If comment has a parent comment. We ignore this, as we just want the top-level-parent comments -->
+        
+    
+
+
+     <!-- If comment doesn't have a top-level-parent -->
+            <div  id="comment-7188913" class="comment">
+<div class="inner">
+<div class="comment-header">
+<div class="asset-meta">
+<span class="byline">
+By 
+
+<span class="vcard author">Mike Schinkel</span>
+
+on <a href="http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html#comment-7188913"><abbr class="published" title="2011-04-23T17:17:35-08:00">April 23, 2011  5:17 PM</abbr></a>
+
+| <a title="Reply" href="javascript:void(0);" onclick="mtReplyCommentOnClick(7188913, 'Mike Schinkel')">Reply</a>
+
+</span>
+</div>
+</div>
+<div class="comment-content">
+<p>Certainly, you can design for failure. And for those where failure it literally not an option, like things that deal with life-safety or where thousands of dollars are lost every second, sure.</p>
+
+<p>But one simple thing you don't address is that doing so is a lot more expensive to design for failure during the development cycle. Yes, any bridge across troubled water can be over-built to ensure that it never, ever fails, but doing so is often so cost-prohibitive as to be unrealistic.</p>
+
+<p>And lastly, your advocacy would have sounded more credible if you had stated up-front that you are CTO of a company that purposes to help people solve this problem in exchange for mucho deniro rather than bury that fact in the middle of the article.</p>
+</div>
+</div>
+</div>
+
+
+        
+    
+    
+
+
+     <!-- If comment has a parent comment. We ignore this, as we just want the top-level-parent comments -->
+        
+    
+
+
+     <!-- If comment doesn't have a top-level-parent -->
+            <div  id="comment-7189921" class="comment">
+<div class="inner">
+<div class="comment-header">
+<div class="asset-meta">
+<span class="byline">
+By 
+
+<span class="vcard author">anon</span>
+
+on <a href="http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html#comment-7189921"><abbr class="published" title="2011-04-23T19:25:39-08:00">April 23, 2011  7:25 PM</abbr></a>
+
+| <a title="Reply" href="javascript:void(0);" onclick="mtReplyCommentOnClick(7189921, 'anon')">Reply</a>
+
+</span>
+</div>
+</div>
+<div class="comment-content">
+<p>"In short, if your systems failed in the Amazon cloud this week, it wasn't Amazon's fault. You either deemed an outage of this nature an acceptable risk or you failed to design for Amazon's cloud computing model."</p>
+
+<p>Oh yes, a company would provide you a cloud service to host your data and when that very service fails and renders your own operation useless it is your fault. So why pay for their service in the first place?</p>
+
+<p>This sounded like an argument made by either a total irrational fanatic, or another network guy who is clueless about creating software, or both. Seems like outages these days are always the fault of the software developer(s) and never that of the one maintaining the network resource. </p>
+
+<p>Anybody with common sense should stop reading right after that quoted sentence.</p>
+</div>
+</div>
+</div>
+
+
+         <!-- Loop through the reply comments -->
+            
+            <div style="margin-left: 20px;">
+            
+            <div  id="comment-7190021" class="comment comment-reply">
+<div class="inner">
+<div class="comment-header">
+<div class="asset-meta">
+<span class="byline">
+By 
+
+<span class="vcard author">Eric</span> in reply to <a href="http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html#comment-7189921">comment from anon</a>
+
+on <a href="http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html#comment-7190021"><abbr class="published" title="2011-04-23T19:45:57-08:00">April 23, 2011  7:45 PM</abbr></a>
+
+| <a title="Reply" href="javascript:void(0);" onclick="mtReplyCommentOnClick(7190021, 'Eric')">Reply</a>
+
+</span>
+</div>
+</div>
+<div class="comment-content">
+<p>Well it's the fault of the software developers for thinking they don't need "clueless network guys"</p>
+
+<p>You realize "in th3 cloud!!!  ZOMG we're in cloud!!!" means nothing more than you're running a virtual machine in a data center somewhere.  That's all amazon does.  It's not magic - you're not safe because you're "in the cloud."</p>
+
+<p>It's just a datacenter.  That most software engineers don't know that is why they need "clueless network guys" to point it out to them.</p>
+</div>
+</div>
+</div>
+
+
+             <!-- For each reply comment, recursively display any reply comments -->    
+            
+            </div>
+            
+        
+    
+    
+
+
+     <!-- If comment has a parent comment. We ignore this, as we just want the top-level-parent comments -->
+        
+    
+
+
+     <!-- If comment doesn't have a top-level-parent -->
+            <div  id="comment-7190068" class="comment">
+<div class="inner">
+<div class="comment-header">
+<div class="asset-meta">
+<span class="byline">
+By 
+
+<span class="vcard author">Abol</span>
+
+on <a href="http://broadcast.oreilly.com/2011/04/the-aws-outage-the-clouds-shining-moment.html#comment-7190068"><abbr class="published" title="2011-04-23T19:53:28-08:00">April 23, 2011  7:53 PM</abbr></a>
+
+| <a title="Reply" href="javascript:void(0);" onclick="mtReplyCommentOnClick(7190068, 'Abol')">Reply</a>
+
+</span>
+</div>
+</div>
+<div class="comment-content">
+<p>"100% uptime should be achievable even when your cloud provider has a massive, data-center-wide outage."</p>
+
+<p>The problem was Amazon had multiple data centers fail simultaneously. Your comments ridiculing people for not being smart enough to span multiple *regions* are a bit strained. According to Amazon's docs, spanning multiple data centers within a single region should have been sufficient to guard against failures short of a regional natural disaster.</p>
+
+<p>So far, it looks like Amazon did not architect their systems to properly isolate data centers from one another, namely by allowing an EBS failure in one center to cascade to others via a single region-wide failure point. Customers bear only limited blame for expecting them to adhere to their stated architectural principles. If Amazon had instead made an even larger goof and architected a single *global* failure point for EBS, this outage would have cascaded to the other regions as well, and your argument would be completely moot.</p>
+
+<p>It is Amazon's fault for not properly isolating data centers. It is customers' fault only to the extent that they relied on Amazon as their exclusive host -- not that they failed to understand how to architect their apps as per Amazon's guidelines. <br />
+</p>
+</div>
+</div>
+</div>
+
+
+        
+    
+    
+</div>
+
+    
+
+<div class="comments-open" id="comments-open">
+
+ <h2 class="comments-open-header">Leave a comment</h2>
+
+    <div id="comment-form-reply" style="display:none">
+    <input type="checkbox" id="comment-reply" name="comment_reply" value="" onclick="mtSetCommentParentID()" />
+    <label for="comment-reply" id="comment-reply-label"></label>
+    </div>
+    <br />
+    <div class="comments-open-content">
+    
+        <form method="post" action="http://blogs.oreilly.com/cgi-bin/mt/mt-c.cgi" name="comments_form" id="comments-form" onsubmit="if (this.bakecookie.checked) rememberMe(this)">
+            <input type="hidden" name="static" value="1" />
+            <input type="hidden" name="entry_id" value="46231" />
+            <input type="hidden" name="__lang" value="en" />
+            <input type="hidden" name="parent_id" value="" id="comment-parent-id" />            <div id="comments-open-data">
+                <div id="comment-form-name">
+                    <label for="comment-author">Name</label>
+                    <input id="comment-author" name="author" size="30" value="" />
+                </div>
+                <div id="comment-form-email">
+                    <label for="comment-email">Email Address</label>
+                    <input id="comment-email" name="email" size="30" value="" />
+                </div>
+                
+                <div id="comment-form-remember-me">
+                    <label for="comment-bake-cookie"><input type="checkbox" id="comment-bake-cookie" name="bakecookie" onclick="if (!this.checked) forgetMe(document.comments_form)" value="1" />
+                        Remember personal info?</label>
+                </div>
+            </div>
+            <div id="comments-open-text">
+                <label for="comment-text">Comments (You may use HTML tags for style)</label>
+                <textarea id="comment-text" name="text" rows="15" cols="50"></textarea>
+            </div>
+
+<p id="comments-open-challenge"><input type="hidden" id="commchallenge_beacon" name="commchallenge_beacon" value="1" /><label for="commchallenge_answer">Type the word  BLOG  below. <strong>(required)</strong>:</label><br /><input type="text" id="commchallenge_answer" name="commchallenge_answer" /></p><script type="text/javascript">
+<!--    
+if ((typeof commenter_name != 'undefined') ||
+    (typeof getCommenterName != 'undefined' &&  getCommenterName())) {
+    mtHide('comments-open-challenge');
+} else {
+    mtShow('comments-open-challenge');
+} 
+// -->
+</script>
+
+
+ <div id="comments-open-footer">
+                <!--input type="submit" accesskey="v" name="preview" id="comment-preview" value="Preview" /-->
+                <input type="submit" accesskey="s" name="post" id="comment-submit" value="Submit" />
+    
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+
+
+</div>
+</div>
+
+<div id="beta">
+    <div id="beta-inner">
+ 
+    <div class="widget-left">
+<h3>Popular Topics</h3>
+
+<style type="text/css">
+#popular a{
+text-decoration: none;
+color: #990000;
+font-size:10px;
+}
+
+#popular td {
+padding:1px;
+}
+#popular {
+padding-top:8px;
+}
+</style>
+<table id="popular" width="176">
+<tr>
+<td style="padding-right:12px;"><a href="http://oreilly.com/javascript/index.html">JavaScript</a></td>
+<td><a href="http://oreilly.com/iphone/index.html">iPhone</a></td>
+</tr>
+<tr>
+<td style="padding-right:12px;"><a href="http://oreilly.com/android/index.html">Android</a></td>
+<td><a href="http://oreilly.com/python/index.html">Python</a></td>
+</tr>
+<tr>
+<td style="padding-right:12px;"><a href="http://oreilly.com/css-html/index.html">HTML5 &amp; CSS</a></td>
+<td><a href="http://headfirstlabs.com/">Head First</a></td>
+</tr>
+<tr>
+<td style="padding-right:12px;"><a href="http://oreilly.com/jquery/index.html">jQuery</a></td>
+<td><a href="http://oreilly.com/java/index.html">Java</a></td>
+</tr>
+<tr>
+<td style="padding-right:12px;"><a href="http://oreilly.com/ipad/index.html">iPad</a></td>
+<td><a href="http://oreilly.com/php/index.html">PHP</a></td>
+</tr>
+<tr>
+<td style="padding-right:12px;"><a href="http://oreilly.com/perl/index.html">Perl</a></td>
+<td><a href="http://oreilly.com/linux/index.html">Linux</a></td>
+</tr>
+</table>
+
+</div> 
+
+<style>
+#bbooks {
+font-size: 10.8px;
+}
+#bbooks ul, #bbooks li {
+list-style-image:none;
+list-style-position:outside;
+list-style-type:none;
+margin:0pt;
+padding:0pt;
+}
+#bbooks li {
+display:inline;
+}
+#bbooks ul li a {
+border-bottom:1px solid #AAAAAA;
+color:#990000;
+display:block;
+margin:0pt;
+padding:4px 6px;
+text-decoration:none;
+}
+#bbooks ul ul li a {
+color:#666666;
+padding-left:18px;
+}
+#bbooks ul li a:hover {
+background-color:#F6F6F6;
+}
+#bbooks a.selected {
+background-color:#ECECEC;
+}
+
+#bbooks ul li a {
+border-bottom:1px solid #AAAAAA;
+color:#990000;
+display:block;
+margin:0pt;
+padding:4px 6px;
+text-decoration:none;
+}
+#bbooks a, a:visited {
+text-decoration:none;
+}
+.rolldown {
+background:#F6F6F6 url(http://oreilly.com/images/oreilly/bullet_menu_open.gif) no-repeat scroll 6px 50%;
+padding-left:18px !important;
+}
+#bbooks a {
+color:#0000FF;
+}
+#bbooks a, a:visited {
+text-decoration:none;
+}
+
+.hideSwitch {
+    display:none;
+}
+
+.showSwitch {
+    display:block;
+}
+
+.rollup {
+    padding-left:18px !important;
+    background:#fff url(http://oreilly.com/images/oreilly/bullet_menu.gif) no-repeat 6px;
+}
+
+.rolldown {
+    padding-left:18px !important;
+    background:#F6F6F6 url(http://oreilly.com/images/oreilly/bullet_menu_open.gif) no-repeat 6px;
+}
+
+.showtopic {
+    padding-left:25px !important;
+}
+
+</style>
+
+
+
+<div class="widget-left"><h3>Browse Books</h3><div id="bbooks">
+<ul>
+<li><a href="#" onclick="toggleSheet('business'); return true" id="businessButton" class="rollup">Business &amp; Culture</a>
+<ul id="business">
+<li>
+
+ <a href="http://oreilly.com/pub/topic/business" class="showtopic"> 
+
+Business</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/culture" class="showtopic"> 
+
+Digital Culture</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/finance" class="showtopic"> 
+
+
+Personal Finance</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/projectmanagement" class="showtopic"> 
+
+Project &amp; Career Management</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/socialmedia" class="showtopic"> 
+
+Social Media</a> </li>
+
+</ul>
+</li>
+<li><a href="#" onclick="toggleSheet('databases'); return false" id="databasesButton" class="rollup">Databases</a>
+<ul id="databases">
+<li>
+
+ <a href="http://oreilly.com/pub/topic/access" class="showtopic"> 
+
+Access</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/mysql" class="showtopic"> 
+
+
+MySQL</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/oracle" class="showtopic"> 
+
+Oracle</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/otherdatabases" class="showtopic"> 
+
+Other Databases</a> </li>
+
+<li>
+
+ <a href="http://oreilly.com/pub/topic/sql" class="showtopic"> 
+
+SQL</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/sqlserver" class="showtopic"> 
+
+SQL Server</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/theory" class="showtopic"> 
+
+
+Theory</a> </li>
+
+</ul>
+</li>
+<li><a href="#" onclick="toggleSheet('design'); return false" id="designButton" class="rollup">Design &amp; Graphics</a>
+<ul id="design">
+<li>
+
+ <a href="http://oreilly.com/pub/topic/adobecs3" class="showtopic"> 
+
+Adobe CS3</a> </li>
+
+<li>
+
+ <a href="http://oreilly.com/pub/topic/adobecs4" class="showtopic"> 
+
+Adobe CS4</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/flash" class="showtopic"> 
+
+Flash &amp; Actionscript</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/graphics" class="showtopic"> 
+
+Illustration &amp; Graphics</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/photomanipulation" class="showtopic"> 
+
+Photoshop &amp; Photomanipulation</a> </li>
+
+<li>
+
+ <a href="http://oreilly.com/pub/topic/printdesign" class="showtopic"> 
+
+Print Design</a> </li>
+
+</ul>
+</li>
+<li><a href="#" onclick="toggleSheet('audiovideo'); return false" id="audiovideoButton" class="rollup">Digital Audio &amp; Video</a>
+<ul id="audiovideo">
+<li>
+
+ <a href="http://oreilly.com/pub/topic/digitalaudio" class="showtopic"> 
+
+Digital Audio</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/digitalvideo" class="showtopic"> 
+
+Digital Video</a> </li>
+
+</ul>
+</li>
+<li><a href="#" onclick="toggleSheet('photography'); return false" id="photographyButton" class="rollup">Digital Photography</a>
+
+<ul id="photography">
+<li>
+
+ <a href="http://oreilly.com/pub/topic/adobecs3" class="showtopic"> 
+
+Adobe CS3</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/adobecs4" class="showtopic"> 
+
+Adobe CS4</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/digiphoto" class="showtopic"> 
+
+Digital Photography</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/photomanipulation" class="showtopic"> 
+
+Photoshop &amp; Photomanipulation</a> </li>
+
+</ul>
+</li>
+
+<li><a href="#" onclick="toggleSheet('hardware'); return false" id="hardwareButton" class="rollup">Hardware</a>
+<ul id="hardware">
+<li>
+
+ <a href="http://oreilly.com/pub/topic/devices" class="showtopic"> 
+
+Devices &amp; Peripherals</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/hardwarehacking" class="showtopic"> 
+
+Hacks &amp; Modifications</a> </li>
+
+<li>
+
+ <a href="http://oreilly.com/pub/topic/pchardware" class="showtopic"> 
+
+PC Hardware</a> </li>
+
+</ul>
+</li>
+<li><a href="#" onclick="toggleSheet('homeoffice'); return false" id="homeofficeButton" class="rollup">Home &amp; Office</a>
+<ul id="homeoffice">
+<li>
+
+ <a href="http://oreilly.com/pub/topic/security" class="showtopic"> 
+
+Computer Security &amp; Privacy</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/games" class="showtopic"> 
+
+Games</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/homeentertainment" class="showtopic"> 
+
+
+Home Entertainment</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/homenetworking" class="showtopic"> 
+
+Home Networking</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/mac" class="showtopic"> 
+
+Mac OS X</a> </li>
+
+<li>
+
+ <a href="http://oreilly.com/pub/topic/macprograms" class="showtopic"> 
+
+Macintosh Programs</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/pchardware" class="showtopic"> 
+
+PC Hardware</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/finance" class="showtopic"> 
+
+
+Personal Finance</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/windows" class="showtopic"> 
+
+Windows 2000 &amp; earlier</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/windows7" class="showtopic"> 
+
+Windows 7</a> </li>
+
+<li>
+
+ <a href="http://oreilly.com/pub/topic/windowsprograms" class="showtopic"> 
+
+Windows Programs</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/windowsvista" class="showtopic"> 
+
+Windows Vista</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/windowsxp" class="showtopic"> 
+
+
+Windows XP</a> </li>
+
+</ul>
+</li>
+<li><a href="#" onclick="toggleSheet('sysadmin'); return false" id="sysadminButton" class="rollup">Networking &amp; Sys Admin</a>
+<ul id="sysadmin">
+<li>
+
+ <a href="http://oreilly.com/pub/topic/apache" class="showtopic"> 
+
+Apache</a> </li>
+
+<li>
+
+ <a href="http://oreilly.com/pub/topic/certification" class="showtopic"> 
+
+Certification</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/cisco" class="showtopic"> 
+
+Cisco &amp; other Routers</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/email" class="showtopic"> 
+
+Email</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/homenetworking" class="showtopic"> 
+
+Home Networking</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/projectmanagement" class="showtopic"> 
+
+
+Project &amp; Career Management</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/protocols" class="showtopic"> 
+
+Protocols</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/serveradmin" class="showtopic"> 
+
+Server Administration</a> </li>
+
+<li>
+
+ <a href="http://oreilly.com/pub/topic/serversecurity" class="showtopic"> 
+
+Server Security</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/spam" class="showtopic"> 
+
+Spam</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/telephony" class="showtopic"> 
+
+
+Telephony</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/wireless" class="showtopic"> 
+
+Wireless</a> </li>
+
+</ul>
+</li>
+<li><a href="#" onclick="toggleSheet('os'); return false" id="osButton" class="rollup">Operating Systems</a>
+<ul id="os">
+<li>
+
+ <a href="http://oreilly.com/pub/topic/linux" class="showtopic"> 
+
+Linux/Unix</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/mac" class="showtopic"> 
+
+Mac OS X</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/windows" class="showtopic"> 
+
+
+Windows 2000 &amp; earlier</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/windows7" class="showtopic"> 
+
+Windows 7</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/windowsvista" class="showtopic"> 
+
+Windows Vista</a> </li>
+
+<li>
+
+ <a href="http://oreilly.com/pub/topic/windowsxp" class="showtopic"> 
+
+Windows XP</a> </li>
+
+</ul>
+</li>
+<li><a href="#" onclick="toggleSheet('programming'); return false" id="programmingButton" class="rollup">Programming</a>
+<ul id="programming">
+<li>
+
+ <a href="http://oreilly.com/pub/topic/dotnet" class="showtopic"> 
+
+
+.NET &amp; Windows Programming</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/ajax" class="showtopic"> 
+
+Ajax</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/csharp" class="showtopic"> 
+
+C#</a> </li>
+
+<li>
+
+ <a href="http://oreilly.com/pub/topic/cprog" class="showtopic"> 
+
+C/C++</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/certification" class="showtopic"> 
+
+Certification</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/games" class="showtopic"> 
+
+
+Games</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/java" class="showtopic"> 
+
+Java</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/otherprogramming" class="showtopic"> 
+
+Other Programming</a> </li>
+
+<li>
+
+ <a href="http://oreilly.com/pub/topic/perl" class="showtopic"> 
+
+Perl</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/php" class="showtopic"> 
+
+PHP</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/projectmanagement" class="showtopic"> 
+
+
+Project &amp; Career Management</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/python" class="showtopic"> 
+
+Python</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/ruby" class="showtopic"> 
+
+Ruby</a> </li>
+
+<li>
+
+ <a href="http://oreilly.com/pub/topic/secureprogramming" class="showtopic"> 
+
+Secure Programming</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/vb" class="showtopic"> 
+
+Visual Basic</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/webservices" class="showtopic"> 
+
+
+Web Services</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/xml" class="showtopic"> 
+
+XML</a> </li>
+
+</ul>
+</li>
+<li><a href="#" onclick="toggleSheet('science'); return false" id="scienceButton" class="rollup">Science &amp; Math</a>
+
+<ul id="science">
+<li>
+
+ <a href="http://oreilly.com/pub/topic/mapping" class="showtopic"> 
+
+Mapping</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/math" class="showtopic"> 
+
+Math</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/science" class="showtopic"> 
+
+Science</a> </li>
+
+</ul>
+</li>
+<li><a href="#" onclick="toggleSheet('security'); return false" id="securityButton" class="rollup">Security</a>
+<ul id="security">
+<li>
+
+ <a href="http://oreilly.com/pub/topic/security" class="showtopic"> 
+
+Computer Security &amp; Privacy</a> </li>
+
+<li>
+
+ <a href="http://oreilly.com/pub/topic/secureprogramming" class="showtopic"> 
+
+Secure Programming</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/serversecurity" class="showtopic"> 
+
+Server Security</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/spam" class="showtopic"> 
+
+
+Spam</a> </li>
+
+</ul>
+</li>
+<li><a href="#" onclick="toggleSheet('softwareengineering'); return false" id="softwareengineeringButton" class="rollup">Software Engineering</a>
+<ul id="softwareengineering">
+<li>
+
+ <a href="http://oreilly.com/pub/topic/designpatterns" class="showtopic"> 
+
+Design Patterns</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/enterprisedev" class="showtopic"> 
+
+Enterprise Development</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/projectmanagement" class="showtopic"> 
+
+Project &amp; Career Management</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/secureprogramming" class="showtopic"> 
+
+Secure Programming</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/testing" class="showtopic"> 
+
+Testing</a> </li>
+
+</ul>
+</li>
+<li><a href="#" onclick="toggleSheet('web'); return false" id="webButton" class="rollup">The Web</a>
+
+<ul id="web">
+<li>
+
+ <a href="http://oreilly.com/pub/topic/ajax" class="showtopic"> 
+
+Ajax</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/flash" class="showtopic"> 
+
+Flash &amp; Actionscript</a> </li>
+
+<li>
+
+ <a href="http://oreilly.com/pub/topic/mapping" class="showtopic"> 
+
+Mapping</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/webapplications" class="showtopic"> 
+
+Web Applications</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/browsers" class="showtopic"> 
+
+
+Web Browsers</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/webdesign" class="showtopic"> 
+
+Web Design</a> </li>
+<li>
+
+ <a href="http://oreilly.com/pub/topic/webdev" class="showtopic"> 
+
+Web Development</a> </li>
+
+<li>
+
+ <a href="http://oreilly.com/pub/topic/webservices" class="showtopic"> 
+
+Web Services</a> </li>
+
+</ul>
+</li>
+</ul>
+</div></div><div class="widget-left">
+<h3>News Topics</h3>
+<div id="default-cloud" class="widget-cloud">
+<IFRAME src="http://www.oreillynet.com/oreilly/orn/newstagcloud.csp" name="related" width="174" height="300" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" ></IFRAME>
+</div>
+
+</div>
+	
+
+    </div>
+</div>
+
+<div id="gamma">
+    <div id="gamma-inner">
+    <div class="noindex"><div class="widget-right">
+<h3>Stay Connected</h3>
+<div class="widget-content">
+<a href="http://elists.oreilly.com/" onClick="var s=s_gi(s_account); s.products=';il-sc-elists'; s.eVar23='il-sc-elists'; s.events='event5'; s.linkTrackVars='eVar23,products,events'; s.linkTrackEvents='event5'; s.tl(this,'o','Ad Click');"><img src="http://oreilly.com/images/icons/email-16x16.gif" alt="RSS 2.0 Feed"  border="0" style="padding-bottom:20px;padding-right:8px;" align="left" />Subscribe to our Newsletters</a> 
+
+<br clear="all" />
+
+<a href="http://youtube.com/oreillymedia" onClick="var s=s_gi(s_account); s.products=';il-sc-youtube'; s.eVar23='il-sc-youtube'; s.events='event5'; s.linkTrackVars='eVar23,products,events'; s.linkTrackEvents='event5'; s.tl(this,'o','Ad Click');"><img src="http://oreilly.com/images/icons/youtube-icon.png" alt="O'Reilly on YouTube"  border="0" style="padding-bottom:8px;padding-right:8px;" align="left" valign="center" />O'Reilly on YouTube</a> 
+<br clear="all" />
+
+<a href="http://twitter.com/oreillymedia" onClick="var s=s_gi(s_account); s.products=';il-sc-twitter'; s.eVar23='il-sc-twitter'; s.events='event5'; s.linkTrackVars='eVar23,products,events'; s.linkTrackEvents='event5'; s.tl(this,'o','Ad Click');"><img src="http://oreilly.com/images/icons/twitter-16x16.png" alt="O'Reilly Media on Twitter"  border="0" style="padding-bottom:8px;padding-right:8px;" align="left" />O'Reilly on Twitter</a> 
+<br clear="all" />
+
+<a href="http://www.facebook.com/OReilly" onClick="var s=s_gi(s_account); s.products=';il-sc-facebook'; s.eVar23='il-sc-facebook'; s.events='event5'; s.linkTrackVars='eVar23,products,events'; s.linkTrackEvents='event5'; s.tl(this,'o','Ad Click');"><img src="http://oreilly.com/images/icons/facebook-16x16.png" alt="RSS 2.0 Feed"  border="0" style="padding-bottom:8px;padding-right:8px;" align="left" />O'Reilly on Facebook</a> 
+<br clear="all" />
+
+<a href="feed://feeds.feedburner.com/oreilly/news" onClick="var s=s_gi(s_account); s.products=';il-sc-feeds-news'; s.eVar23='il-sc-feeds-news'; s.events='event5'; s.linkTrackVars='eVar23,products,events'; s.linkTrackEvents='event5'; s.tl(this,'o','Ad Click');"><img src="http://oreilly.com/images/icons/feed-icon-16x16.png" alt="RSS 2.0 Feed"  border="0" style="padding-bottom:8px; padding-right:8px;" align="left" />News Feed</a> 
+<br clear="all" />
+
+<a href="http://feeds.feedburner.com/oreilly/newbooks" onClick="var s=s_gi(s_account); s.products=';il-sc-feeds-newbooks'; s.eVar23='il-sc-feeds-newbooks'; s.events='event5'; s.linkTrackVars='eVar23,products,events'; s.linkTrackEvents='event5'; s.tl(this,'o','Ad Click');"><img src="http://oreilly.com/images/icons/feed-icon-16x16.png" alt="RSS 2.0 Feed"  border="0" style="padding-bottom:8px;padding-right:8px;" align="left" />New Titles Feed</a> 
+<br clear="all" />
+
+<a href="http://feeds.feedburner.com/oreilly/upcomingbooks" onClick="var s=s_gi(s_account); s.products=';il-sc-feeds-upcomingbooks'; s.eVar23='il-sc-feeds-upcomingbooks'; s.events='event5'; s.linkTrackVars='eVar23,products,events'; s.linkTrackEvents='event5'; s.tl(this,'o','Ad Click');"><img src="http://oreilly.com/images/icons/feed-icon-16x16.png" alt="RSS 2.0 Feed"  border="0" style="padding-bottom:8px;padding-right:8px;" align="left" />Upcoming Titles Feed</a> 
+<br clear="all" />
+
+
+<span class="more"><a href="http://www.oreillynet.com/feeds/" onClick="var s=s_gi(s_account); s.products=';il-sc-feeds'; s.eVar23='il-sc-feeds'; s.events='event5'; s.linkTrackVars='eVar23,products,events'; s.linkTrackEvents='event5'; s.tl(this,'o','Ad Click');">New to RSS?</a></span>
+
+</div>
+</div>
+					 <div class="widget-right"  style="margin-right: 0px; margin-left: 0px; padding-right: 0px; padding-left: 0px;"><h3>Recommended for You</h3>
+<div class="widget-content" style="margin-right: 0px; margin-left: 0px; padding-right: 0px; padding-left: 0px;">
+<!-- MyBuys Web Recommendation Zone -->
+<div mybuyszone="3"></div>
+<!-- End MyBuys Web Recommendation Zone -->
+</div>
+</div><div class="widget-right">
+<h3>Got a Question?</h3>
+<div class="widget-content">
+ <div id="gsfn_list_widget">
+    
+
+    <div class="sidebar-item-content"><img src="http://oreilly.com/images/oreilly/satisfaction-icons.gif"><br />
+ <div class="gsfn_content">
+    <form id="gsfn_search_form" action="http://getsatisfaction.com/oreilly" method="get" accept-charset="utf-8" onsubmit="gsfn_search(this); return false;">
+      <input type="hidden" name="widget" value="" />
+      <input type="hidden" name="limit" value="3" />
+      <input type="hidden" name="style" value="" />
+      <input type="hidden" name="callback" value="gsfnResultsCallback" />
+      <input type="hidden" name="format" value="json" />
+      <label for="gsfn_search_query" class="gsfn_label">
+
+Do you have a question about <strong>O'Reilly's products and services</strong>? Share an idea! Report a problem...</label><br /><br />
+      <input type="text" size="16" name="query" value="" id="gsfn_search_query" maxlength="120" style="padding-bottom: 6px;"/><br />
+
+      <input type="submit" id="continue" value="Continue" />
+    </form>
+
+    <div id="gsfn_search_results" style="height: auto;"></div>
+  </div>
+
+<br />
+
+<a href="http://getsatisfaction.com/oreilly" class="widget_title">Active discussions:</a><br /><br />
+
+      <div id="gsfn_content">Loading... </div>
+
+       <div class="powered_by"><a href="http://getsatisfaction.com/"><img alt="Favicon" src="http://www.getsatisfaction.com/favicon.gif" style="vertical-align: middle;" /></a> <a href="http://getsatisfaction.com/">Service and support by Satisfaction</a></div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+&nbsp;</div>
+</div>
+
+
+
+</div>
+</div>
+<div id="footer">
+<div id="footer-inner">
+<div id="footer-content">
+
+<table border="0" style="font-size: 11px; text-align: left;">
+
+<tbody>
+<tr><td valign="top" align="left" width="25%" style="padding-left: 20px; padding-right: 20px;">
+<a href="http://oreilly.com/"><img width="155" height="35" border="0" alt="O'Reilly Media" src="http://cdn.oreilly.com/images/standard/oreilly-logo-footer.gif"/></a>
+
+<br /><br />
+&copy; 2011, O'Reilly Media, Inc.<br/>(707) 827-7000 / (800) 998-9938<br/> All trademarks and registered trademarks appearing on oreilly.com are the property of their respective owners. </td>
+
+
+<td valign="top" class="footercol1">
+<ul>
+<li><a href="http://oreilly.com/about/"><strong>About O'Reilly</strong></a></li>
+<li><a href="http://oreilly.com/academic/">Academic Solutions</a></li>
+<li><a href="http://oreilly.com/contact.html">Contacts</a></li>
+<li><a href="http://oreilly.com/oreilly/cs/">Customer Service</a></li>
+<li><a href="http://oreilly.com/jobs/">Careers</a></li>
+<li><a href="http://press.oreilly.com/">Press Room</a></li>
+<li><a href="http://oreilly.com/oreilly/privacy.csp">Privacy Policy</a></li>
+<li><a href="http://oreilly.com/terms/">Terms of Service</a></li>
+<li><a href="http://oreilly.com/oreilly/author/intro.csp">Writing for O'Reilly</a></li>
+</ul>
+</td>
+
+<td valign="top" class="footercol2">
+<ul>
+<li><a href="http://oreilly.com/community/"><strong>Community</strong></a></li>
+<li><a href="http://oreilly.com/authors/">Authors</a></li>
+<li><a href="http://forums.oreilly.com/">Forums</a></li>
+<li><a href="https://members.oreilly.com/">Membership</a></li>
+<li><a href="http://elists.oreilly.com/">Newsletters</a></li>
+<li><a href="http://oreilly.com/feeds/">RSS Feeds</a></li>
+<li><a href="http://ug.oreilly.com/">User Groups</a></li>
+</ul>
+</td>
+
+<td valign="top" class="footercol3">
+<ul>
+<li><strong>More O'Reilly Sites</strong></li>
+<li><a href="http://igniteshow.com/">igniteshow.com</a></li>
+<li><a href="http://makerfaire.com/">makerfaire.com</a></li>
+<li><a href="http://makezine.com/">makezine.com</a></li>
+<li><a href="http://craftzine.com">craftzine.com</a></li>
+<li><a href="http://labs.oreilly.com">labs.oreilly.com</a></li>
+</ul>
+
+<ul>
+<li><strong>Partner Sites</strong></li>
+<li><a href="https://www.x.com/community/ppx/devzone">PayPal Developer Zone</a></li>
+<li><a href="http://blogs.forbes.com/oreillymedia/">O'Reilly Insights on Forbes.com</a></li>
+</ul>
+</td>
+</tr> 
+
+</tbody>
+</table>
+	
+<!-- Satisfaction Widget JS -->
+<script src="http://getsatisfaction.com/oreilly/widgets/javascripts/2f71b77af1/widgets.js" type="text/javascript"></script> <script src="http://getsatisfaction.com/oreilly/topics.widget?callback=gsfnTopicsCallback&amp;limit=3&amp;sort=recently_active" type="text/javascript"></script>
+<!-- End Satisfaction Widget JS -->
+
+                    </div>
+                </div>
+            </div>
+
+</div> <!-- /#content-09 -->
+        </div>
+    </div>
+<!-- MyBuys Page Parameters -->
+<script type="text/javascript">
+mybuys.setPageType("CONTENT_ITEM");
+mybuys.set("categoryid","http://purl.oreilly.com/resource-center/none");
+</script>
+<!-- #MyBuys Page Parameters -->
+<!-- analytics -->
+
+<!-- Start Quantcast tag --> 
+<script type="text/javascript" src=" http://edge.quantserve.com/quant.js "></script> 
+<script type="text/javascript">_qoptions = { tags:"News" }; _qacct="p-20l78bOOCbhcg";quantserve();</script> 
+<noscript> 
+<a href=" http://www.quantcast.com/p-20l78bOOCbhcg " target="_blank"><img src=" http://pixel.quantserve.com/pixel/p-20l78bOOCbhcg.gif?tags=News " style="display: none;" border="0" height="1" width="1" alt="Quantcast"/></a> 
+</noscript> 
+<!-- End Quantcast tag --> 
+<!-- google -->
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-4591498-1";
+urchinTracker();
+</script>
+<!-- #google -->
+
+<!-- #analytics --> 
+<script language="JavaScript" type="text/javascript">
+var s_account="ororeilly,orglobal"  // change report suite ID accordingly
+</script>
+<!-- SiteCatalyst code version: H.20.3. Copyright 1997-2009 Omniture, Inc. More info available at http://www.omniture.com -->
+<script language="JavaScript" type="text/javascript" src="http://assets.oreilly.com/js/s_code.js"></script>
+<script language="JavaScript" type="text/javascript">
+s.pageName="oreilly:broadcast:the aws outage the clouds shining moment"
+s.channel="oreilly"
+s.prop1="oreilly:broadcast"
+s.prop2="oreilly:broadcast:broadcast"
+s.prop3="oreilly:broadcast:broadcast:broadcast"
+s.prop4="article"
+s.hier1="oreilly,broadcast,broadcast,broadcast"
+s.prop5="the aws outage the clouds shining moment"
+s.prop6="BC46231" 
+s.prop7="04/23/2011" // publish date
+//s.prop15=""
+//These props should be set when a blog/article is read, post or reply made. 
+s.prop21="george reese" // author name
+s.prop22="broadcast" // blog name
+s.prop23="the aws outage the clouds shining moment" // entry title
+s.prop24="04/23/2011" // post date
+//s.prop25="" // days since last post
+s.prop26="saturday" // day of week
+/* Conversion Variables */
+s.campaign=""
+s.events=""
+
+/************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+var s_code=s.t();if(s_code)document.write(s_code)//--></script>
+<!-- End SiteCatalyst code version: H.20.2. -->
+
+
+
+
+<!-- MyBuys Page Initialization -->
+<script type="text/javascript">
+  mybuys.initPage();
+</script>
+<!-- #MyBuys Page Initialization -->
+
+
+<!-- chartbeat -->
+<script type="text/javascript">
+var cbjspath = "static.chartbeat.com/js/chartbeat.js?uid=1632&domain=broadcast.oreilly.com";
+var cbjsprotocol = (("https:" == document.location.protocol) ? "https://s3.amazonaws.com/" : "http://");
+document.write(unescape("%3Cscript src='"+cbjsprotocol+cbjspath+"' type='text/javascript'%3E%3C/script%3E"))
+</script>
+<!-- #chartbeat -->
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/yui/2.6.0/build/utilities/utilities.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/yui/2.6.0/build/datasource/datasource-min.js"></script> 
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/yui/2.6.0/build/autocomplete/autocomplete-min.js"></script>
+<script type="text/javascript" src="http://content.atomz.com/sp1003bcf0/publish/autocomplete_data.js?sp_js_cache_ver=3"></script>
+</body>
+</html>
+

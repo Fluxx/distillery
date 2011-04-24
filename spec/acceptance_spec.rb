@@ -56,3 +56,43 @@ distillation_of 'vanilla_pound_cake.html' do
   should_not =~ /Simple template. Powered by/               # Footer
   should_not =~ /Conversions and Measurement Tips/          # Header
 end
+
+distillation_of 'clouds_shining_moment.html' do
+  should =~ /The Dueling Models of Cloud Computing/
+  should =~ /These kinds of failures don't expose the weaknesses/
+  should =~ /Dynamic DNS pointing to elastic load balancers/
+  
+  should_not =~ /Razi Sharir/                               # Comments
+  should_not =~ /All trademarks and registered/             # Footer
+  should_not =~ /Community Guidelines/                      # Header
+end
+
+distillation_of 'game_blog.html' do
+  should =~ /Currently in my Plants vs Zombies clone/
+  should =~ /50% they start to show sign/
+  should =~ /can never get enough feedback./
+  
+  should_not =~ /Tutorials/                                 # Header
+  should_not =~ /Java Project/                              # Sidebar
+  should_not =~ /View all comments/                         # Footer
+end
+
+distillation_of 'js_this_keyword.html' do
+  should =~ /keyword is ubiquitous yet misconceptions abound/
+  should =~ /in ECMAScript parlance these are/
+  should =~ /Annex C/
+  
+  should_not =~ /11 RESPONSES TO UNDERSTANDING/             # Footer
+  should_not =~ /The JavaScript Comma Operator/             # Sidebar
+  should_not =~ /Auto-generating JavaScript Unit Test/      # Header
+end
+
+distillation_of 'nyt_social_media.html' do
+  should =~ /What happens if you bring together/
+  should =~ /shows a 2D bar-graph-like timeline/
+  should =~ /then to explore several links/
+  
+  should_not =~ /ADD A COMMENT/                             # Comments
+  should_not =~ /ABOUT 1,000 POSTS AGO/                     # Sidebar
+  should_not =~ /iPhone Tracker: How your/                  # Header
+end
