@@ -74,20 +74,20 @@ module Distillery
       top_scoring_element.inner_html
     end
 
-    private
-
-    def top_scoring_element
-      sorted = scores.sort_by { |xpath, score| score }.reverse
-      top_xpath, top_score = sorted.first.first
-      at(top_xpath)
-    end
-
     def prep_for_distillation
       remove_irrelevant_elements
       remove_unlikely_elements
       coerce_elements_to_paragraphs
       # TODO: Convert newline breaks to paragraphs
       score!
+    end
+
+    private
+
+    def top_scoring_element
+      sorted = scores.sort_by { |xpath, score| score }.reverse
+      top_xpath, top_score = sorted.first.first
+      at(top_xpath)
     end
 
     def has_no_block_children?(elem)
