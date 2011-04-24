@@ -112,12 +112,16 @@ module Distillery
         doc.scores['/html/body/p'].should == 4
       end
 
-      it 'gives one point per chunk of 100 characters' do
+      it 'gives one point per chunk of 100 characters, max of 3' do
         doc = document_of("<p>#{'f'*201}</p>")
         doc.score!
         doc.scores['/html/body/p'].should == 4
+        
+        doc = document_of("<p>#{'f'*1000}</p>")
+        doc.score!
+        doc.scores['/html/body/p'].should == 5
       end
-
+      
       it 'subtracts a point for any links in a element' do
         doc = document_of("<p><a>foo</a></p>")
         doc.score!

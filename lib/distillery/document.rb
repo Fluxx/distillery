@@ -52,7 +52,7 @@ module Distillery
       search('p').each do |paragraph|
         points = 1
         points += paragraph.text.split(',').length
-        points += paragraph.text.length / 100
+        points += [paragraph.text.length / 100, 3].min
         points -= paragraph.children.css('a').count
 
         scores[paragraph.path] = points
