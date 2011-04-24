@@ -33,7 +33,7 @@ module Distillery
 
     # Corrects improper use of HTML tags by coerceing elements that are likely paragraphs
     # to <p> tags
-    # 
+    #
     # TODO: Convert text nodes to <p> as well
     def coerce_elements_to_paragraphs
       search('div').each do |div|
@@ -70,12 +70,16 @@ module Distillery
     # Distills the document down to just its content
     def distill
       prep_for_distillation
+      score!
+      clean_top_scoring_element!
 
+      top_scoring_element.inner_html
+    end
+
+    def clean_top_scoring_element!
       top_scoring_element.search("*").each do |node|
         node.remove if node.text.chomp.empty? and node.element?
       end
-
-      top_scoring_element.inner_html
     end
 
     def prep_for_distillation
@@ -83,7 +87,6 @@ module Distillery
       remove_unlikely_elements
       coerce_elements_to_paragraphs
       # TODO: Convert newline breaks to paragraphs
-      score!
     end
 
     private

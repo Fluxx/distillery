@@ -42,7 +42,7 @@ module Distillery
           subject.search(tag).should be_empty
         end
       end
-      
+
       it 'does not remove the body even if it has a bad class or id' do
         doc = Document.new("<html><body class='sidebar'>foo</body></html>")
         doc.remove_unlikely_elements
