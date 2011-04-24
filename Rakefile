@@ -9,10 +9,14 @@ end
 
 require "distillery"
 
+def doc_for_fixture(fixture)
+  file = File.join(File.dirname(__FILE__), 'spec', 'fixtures', fixture)
+  Distillery::Document.new(File.open(file).read)
+end
+
 namespace :fixture do
   task :score, :filename do |t, args|
-    file = File.join(File.dirname(__FILE__), 'spec', 'fixtures', args[:filename])
-    doc = Distillery::Document.new(File.open(file).read)
+    doc = doc_for_fixture(args[:filename])
 
     doc.prep_for_distillation
     doc.scores.each do |xpath, score|
@@ -21,6 +25,12 @@ namespace :fixture do
 
     outfile = File.open("/tmp/scored.#{args[:filename]}", 'w')
     outfile << doc.to_s
+    sh "open #{outfile.path}"
+  end
+  
+  task :distill, :filename do |t, args|
+    outfile = File.open("/tmp/distilled.#{args[:filename]}", 'w')
+    outfile << doc_for_fixture(args[:filename]).distill
     sh "open #{outfile.path}"
   end
 end
