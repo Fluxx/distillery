@@ -15,6 +15,7 @@ def doc_for_fixture(fixture)
 end
 
 namespace :fixture do
+  desc 'Open the fixture with data-score elements added showing an elements score'
   task :score, :filename do |t, args|
     doc = doc_for_fixture(args[:filename])
 
@@ -28,6 +29,7 @@ namespace :fixture do
     sh "open #{outfile.path}"
   end
   
+  desc 'Distill a fixture and open it'
   task :distill, :filename do |t, args|
     outfile = File.open("/tmp/distilled.#{args[:filename]}", 'w')
     outfile << doc_for_fixture(args[:filename]).distill
