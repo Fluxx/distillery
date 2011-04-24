@@ -36,3 +36,23 @@ distillation_of 'clams_and_linguini.html' do
   should_not =~ /Bookmark this page using the following/    # Footer
   should_not =~ /Google Search/                             # Header
 end
+
+distillation_of 'beef_jerkey.html' do
+  should =~ /always had a weakness/
+  should =~ /2 pounds trimmed beef top round/
+  should =~ /Om nom nom nom/
+  
+  should_not =~ /Leave a Reply/                             # Footer
+  should_not =~ /EMAIL SUBSCRIPTION/                        # Sidebar
+  should_not =~ /allthingssimpleblog.com\/feed\//           # Header
+end
+
+distillation_of 'vanilla_pound_cake.html' do
+  should =~ /Tahitian bean for its floral notes/
+  should =~ /beat until light and fluffy/
+  should =~ /cake comes out clean/
+  
+  should_not =~ /Pound cake is a classi/                    # Comments
+  should_not =~ /Simple template. Powered by/               # Footer
+  should_not =~ /Conversions and Measurement Tips/          # Header
+end
