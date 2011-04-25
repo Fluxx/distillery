@@ -253,6 +253,14 @@ module Distillery
         Document.new(string).distill!.encoding.name.should == 'ISO-8859-1'
       end
 
+      it 'does not clean the page if :clean => false is passed' do
+        doc = Document.new(File.open('./spec/fixtures/baked_ziti.html').read)
+        doc.distill!(:dirty => true).should =~ /Add to Recipe Box/
+
+        doc = Document.new(File.open('./spec/fixtures/baked_ziti.html').read)
+        doc.distill!.should_not =~ /Add to Recipe Box/
+      end
+
     end
 
   end

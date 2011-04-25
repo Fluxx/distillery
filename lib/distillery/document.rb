@@ -72,10 +72,10 @@ module Distillery
     end
 
     # Distills the document down to just its content
-    def distill!
+    def distill!(options = {})
       prep_for_distillation!
       score!
-      clean_top_scoring_element!
+      clean_top_scoring_element! unless !!options.delete(:dirty)
 
       top_scoring_element.inner_html
     end
