@@ -8,8 +8,20 @@ The logic for Distillery was heavily influenced by [Readability](https://www.rea
 
 ## Usage
 
-Usage is quite simple:
+First, create a new `Distillery::Document` object, by passing in an a string that is the content of the HTML page you would like to distill
 
     doc = Distillery::Document.new(string_of_html)
-    doc.distill
-    > "distilled HTML content"
+
+Then you simply call `#distill!` on the document object to distill it and return the distilled content.
+
+    doc.distill!
+    > "distilled content"
+    
+The `#distill!` method by default will clean the HTML of the content to remove elements from it which are unlikely to be the actual content.  Usually, this is things like social media share buttons, widgets, advertisements, etc.  If you would like to not clean the content, simply pass `:dirty => true` to the `#distill!` method:
+
+    doc.distill!(:dirty => true)
+    > "raw distilled content"
+    
+## Advanced Usage
+
+Under the covers, #distill! is removing unlikely elements, converting paragraph-like elements to actual `<p>`, scoring document elements based on some heuristics and cleaning the output of the content.  Soon you will be able to tweak how these heuristics are applied.
