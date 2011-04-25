@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby 
+
+$LOAD_PATH << File.dirname(__FILE__) + '/../lib/'
+
+require 'rubygems'
+require 'open-uri'
+require 'distillery'
+
+if ARGV.length != 1
+  STDERR.puts "Usage: #{File.basename($0)} URL"
+  exit 1
+end
+
+text = open(ARGV.first).read
+puts Distillery::Document.new(text).distill!
