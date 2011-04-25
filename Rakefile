@@ -32,7 +32,7 @@ namespace :fixture do
   desc 'Distill a fixture and open it'
   task :distill, :filename do |t, args|
     outfile = File.open("/tmp/distilled.#{args[:filename]}", 'w')
-    outfile << doc_for_fixture(args[:filename]).distill
+    outfile << doc_for_fixture(args[:filename]).distill!
     sh "open #{outfile.path}"
   end
 end
