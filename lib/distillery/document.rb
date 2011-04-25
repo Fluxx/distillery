@@ -86,9 +86,7 @@ module Distillery
       top_scoring_element.search("*").each do |node|
         if UNRELATED_ELEMENTS.include?(node.name)
           node.remove
-        elsif POSSIBLE_UNRELATED_ELEMENTS.include?(node.name) && identifier_weight(node) < 0
-          node.remove
-        elsif unlikely_to_be_content?(node)
+        elsif node.text.count(',') < 2 && unlikely_to_be_content?(node)
           node.remove
         end
       end
@@ -105,10 +103,14 @@ module Distillery
 
     def augment_scores_by_link_weight!
       scores.each do |xpath, points|
-        link_length = at(xpath).search('a').reduce(0) { |total, e| total + e.text.length }
-        total_length = [at(xpath).text.length, 1].max # Protect against dividing by 0
-        scores[xpath] = scores[xpath] * (1 - link_length.to_f / total_length.to_f)
+        scores[xpath] = scores[xpath] * ( 1 - link_density(at(xpath)) )
       end
+    end
+
+    def link_density(elem)
+      link_length = elem.search('a').reduce(0) { |total, e| total + e.text.length }
+      total_length = [elem.text.length, 1].max # Protect against dividing by 0
+      link_length.to_f / total_length.to_f
     end
 
     def top_scoring_element
@@ -126,16 +128,34 @@ module Distillery
     end
 
     def identifier_weight(elem)
-      0.tap do |weight|
-        {POSITIVE_IDENTIFIERS => 25, NEGATIVE_IDENTIFIERS => -25}.each do |regex, score|
-          weight += score if elem['class'] =~ regex
-          weight += score if elem['id'] =~ regex
-        end
+      weight = 0
+
+      {POSITIVE_IDENTIFIERS => 25, NEGATIVE_IDENTIFIERS => -25}.each do |regex, score|
+        weight += score if elem['class'] =~ regex
+        weight += score if elem['id'] =~ regex
       end
+
+      weight
     end
 
     def unlikely_to_be_content?(elem)
-      false
+      return false unless POSSIBLE_UNRELATED_ELEMENTS.include?(elem.name)
+
+      p = elem.search('p').length
+      img = elem.search('img').length
+      li = elem.search('li').length
+      input = elem.search('input').length
+      weight = identifier_weight(elem)
+      link_density = link_density(elem)
+
+      weight < 0 ||                                        # Terrible weight
+      elem.text.empty? || elem.text.length < 15 ||         # Empty text or too short text
+      img > p ||                                           # More images than paragraphs
+      li - 100 > p && !(elem.name =~ /ul|ol/) ||           # Has lots of list items
+      input > p / 3 ||                                     # Has a high % of inputs
+      elem.text.length < 25 && (img == 0 || img > 2) ||    # Short text + no/high img count
+      weight < 25 && link_density > 0.2 ||                 # Weak content signal and moderate link density
+      weight >= 25 && link_density > 0.5                   # Strong content signal and high link density
     end
 
   end
