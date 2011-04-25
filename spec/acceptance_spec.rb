@@ -96,3 +96,13 @@ distillation_of 'nyt_social_media.html' do
   should_not =~ /ABOUT 1,000 POSTS AGO/                     # Sidebar
   should_not =~ /iPhone Tracker: How your/                  # Header
 end
+
+distillation_of 'ginger_cookies.html' do
+  should =~ /Ginger cookies are chilled/
+  should =~ /12 minutes/
+  should =~ /Makes about 4 dozen crispy/
+
+  should_not =~ /Sponsored Links/                             # Sidebar
+  should_not =~ /User Reviews/                                # Comments
+  should_not =~ /Free Southern Food Newsletter!/              # Header
+end

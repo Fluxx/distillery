@@ -154,6 +154,12 @@ module Distillery
         doc
       end
 
+      it 'removes all empty elements' do
+        doc = doc_with_top_scored_html_of("<div>foo <span></span</div>")
+        doc.clean_top_scoring_element!
+        doc.search('span').should be_empty
+      end
+
       %w[iframe form object].each do |tag|
         it "removes any #{tag} elements" do
           doc = doc_with_top_scored_html_of("foo <#{tag}></#{tag}>")

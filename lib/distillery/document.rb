@@ -84,6 +84,10 @@ module Distillery
     # advertisements, widgets, etc
     def clean_top_scoring_element!
       top_scoring_element.search("*").each do |node|
+        node.remove if node.text.gsub(/\s/, '').empty?
+      end
+
+      top_scoring_element.search("*").each do |node|
         if UNRELATED_ELEMENTS.include?(node.name)
           node.remove
         elsif node.text.count(',') < 2 && unlikely_to_be_content?(node)
@@ -151,7 +155,7 @@ module Distillery
       weight < 0 ||                                        # Terrible weight
       elem.text.empty? || elem.text.length < 15 ||         # Empty text or too short text
       img > p ||                                           # More images than paragraphs
-      li - 100 > p && !(elem.name =~ /ul|ol/) ||           # Has lots of list items
+      li > p && !(elem.name =~ /ul|ol/) ||                 # Has lots of list items
       input > p / 3 ||                                     # Has a high % of inputs
       elem.text.length < 25 && (img == 0 || img > 2) ||    # Short text + no/high img count
       weight < 25 && link_density > 0.2 ||                 # Weak content signal and moderate link density
