@@ -60,12 +60,9 @@ module Distillery
         points += [paragraph.text.length / 100, 3].min
 
         scores[paragraph.path] = points
-
         parent = paragraph.parent
-        scores[parent.path] = scores[parent.path] + points
-
-        grandparent = parent.parent
-        scores[grandparent.path] = scores[grandparent.path] + points.to_f/2
+        scores[parent.path] += points
+        scores[parent.parent.path] += points.to_f/2
       end
 
       augment_scores_by_link_weight!
@@ -88,9 +85,8 @@ module Distillery
       end
 
       top_scoring_element.search("*").each do |node|
-        if UNRELATED_ELEMENTS.include?(node.name)
-          node.remove
-        elsif node.text.count(',') < 2 && unlikely_to_be_content?(node)
+        if UNRELATED_ELEMENTS.include?(node.name) || 
+          (node.text.count(',') < 2 && unlikely_to_be_content?(node))
           node.remove
         end
       end
@@ -132,14 +128,10 @@ module Distillery
     end
 
     def identifier_weight(elem)
-      weight = 0
-
-      {POSITIVE_IDENTIFIERS => 25, NEGATIVE_IDENTIFIERS => -25}.each do |regex, score|
-        weight += score if elem['class'] =~ regex
-        weight += score if elem['id'] =~ regex
+      {POSITIVE_IDENTIFIERS => 25, NEGATIVE_IDENTIFIERS => -25}.reduce(0) do |weight, pair|
+        regex, score = pair
+        (weight += score if "#{elem['class']}+#{elem['id']}" =~ regex) or weight
       end
-
-      weight
     end
 
     def unlikely_to_be_content?(elem)
