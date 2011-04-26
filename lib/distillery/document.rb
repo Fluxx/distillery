@@ -81,11 +81,11 @@ module Distillery
     # advertisements, widgets, etc
     def clean_top_scoring_element!
       top_scoring_element.search("*").each do |node|
-        node.remove if node.text.gsub(/\s/, '').empty?
+        node.remove if has_empty_text?(node)
       end
 
       top_scoring_element.search("*").each do |node|
-        if UNRELATED_ELEMENTS.include?(node.name) || 
+        if UNRELATED_ELEMENTS.include?(node.name) ||
           (node.text.count(',') < 2 && unlikely_to_be_content?(node))
           node.remove
         end
@@ -132,6 +132,10 @@ module Distillery
         regex, score = pair
         (weight += score if "#{elem['class']}+#{elem['id']}" =~ regex) or weight
       end
+    end
+
+    def has_empty_text?(elem)
+      elem.text.gsub(/\s/, '').empty? && elem.name != 'br'
     end
 
     def unlikely_to_be_content?(elem)

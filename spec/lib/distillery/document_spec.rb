@@ -152,6 +152,11 @@ module Distillery
         doc.search('span').should be_empty
       end
 
+      it 'does not remove <br> elements' do
+        doc = doc_with_top_scored_html_of("<div>foo<br class='noremove' /></div>", :clean_top_scoring_element!)
+        doc.search('.noremove').should_not be_empty
+      end
+
       %w[iframe form object].each do |tag|
         it "removes any #{tag} elements" do
           doc = doc_with_top_scored_html_of("foo <#{tag}></#{tag}>", :clean_top_scoring_element!)
@@ -200,7 +205,7 @@ module Distillery
         doc.search('.remove').should be_empty
       end
 
-      it 'should not clean elements not of table ul or div' do
+      it 'should not clean the conntent elements not of table ul or div' do
         doc = doc_with_top_scored_html_of("<span class='remove'><strong>Source:</strong> Wikipedia</span>", :clean_top_scoring_element!)
         doc.search('.remove').should_not be_empty
       end
