@@ -6,11 +6,11 @@ Gem::Specification.new do |s|
   s.name        = "distillery"
   s.version     = Distillery::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["TODO: Write your name"]
-  s.email       = ["TODO: Write your email address"]
-  s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.authors     = ["Jeff Pollard"]
+  s.email       = ["jeff.pollard@gmail.com"]
+  s.homepage    = "https://github.com/Fluxx/distillery"
+  s.summary     = %q{Extract the content portion of an HTML document.}
+  s.description = %q{Distillery extracts the "content" portion out of an HTML document. It applies heuristics based on element type, location, class/id name and other attributes to try and find the content part of the HTML document and return it.}
 
   s.rubyforge_project = "distillery"
 
