@@ -1,4 +1,5 @@
 require "distillery/document"
+require "distillery/version"
 
 module Distillery
   ROOT = File.dirname(__FILE__)
