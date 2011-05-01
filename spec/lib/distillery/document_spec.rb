@@ -241,9 +241,9 @@ module Distillery
         end
       end
 
-      it 'does not clean the page if :dirty => true is passed' do
+      it 'does not clean the page if :clean => false is passed' do
         doc = Document.new(File.open('./spec/fixtures/baked_ziti.html').read)
-        doc.distill!(:dirty => true).should =~ /Add to Recipe Box/
+        doc.distill!(:clean => false).should =~ /Add to Recipe Box/
 
         doc = Document.new(File.open('./spec/fixtures/baked_ziti.html').read)
         doc.distill!.should_not =~ /Add to Recipe Box/

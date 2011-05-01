@@ -90,7 +90,7 @@ module Distillery
     def distill!(options = {})
       prep_for_distillation!
       score!
-      clean_top_scoring_element! unless !!options.delete(:dirty)
+      clean_top_scoring_element! unless options.delete(:clean) == false
 
       top_scoring_element.inner_html
     end

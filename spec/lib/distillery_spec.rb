@@ -19,8 +19,8 @@ describe Distillery do
 
     it 'passes the same options through to the distill! method' do
       Distillery::Document.stub!(:new).and_return(mockdoc)
-      mockdoc.should_receive(:distill!).once.with(hash_including(:dirty => true))
-      Distillery.distill(document, :dirty => true)
+      mockdoc.should_receive(:distill!).once.with(hash_including(:clean => false))
+      Distillery.distill(document, :clean => false)
     end
   end
 

@@ -20,5 +20,5 @@ end
 unless ARGV.last =~ /^http/
   puts opts.help
 else
-  puts Distillery.distill(open(ARGV.last).read, :dirty => opts.dirty?)
+  puts Distillery.distill(open(ARGV.last).read, :clean => !opts.dirty?)
 end
