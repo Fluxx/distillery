@@ -247,6 +247,10 @@ module Distillery
         doc.distill!.should_not =~ /Add to Recipe Box/
       end
 
+      it 'works with a HTML document that has no winner' do
+        document_of('foo').distill!.should == 'foo'
+      end
+
     end
 
   end

@@ -111,8 +111,8 @@ module Distillery
     end
 
     def top_scoring_element
-      sorted = scores.sort_by { |xpath, score| score }.reverse
-      top_xpath, top_score = sorted.first.first
+      winner = scores.sort_by { |xpath, score| score }.reverse.first
+      top_xpath, top_score = winner || ['/html/body', 1]
       at(top_xpath)
     end
 
