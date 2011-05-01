@@ -1,15 +1,24 @@
-#!/usr/bin/env ruby 
+#!/usr/bin/env ruby
 
 $LOAD_PATH << File.dirname(__FILE__) + '/../lib/'
 
-require 'rubygems'
 require 'open-uri'
 require 'distillery'
+require 'slop'
 
-if ARGV.length != 1
-  STDERR.puts "Usage: #{File.basename($0)} URL"
-  exit 1
+opts = Slop.parse :help => true do
+
+  on :d, :dirty, 'Do not clean content HTML', default: false
+  on :v, :version, 'Print the version' do
+    puts Distillery::VERSION
+    exit
+  end
+
+  banner "Usage: distill [options] http://www.example.com/"
 end
 
-text = open(ARGV.first).read
-puts Distillery::Document.new(text).distill!
+unless ARGV.last =~ /^http/
+  puts opts.help
+else
+  puts Distillery.distill(open(ARGV.last).read, :dirty => opts.dirty?)
+end
