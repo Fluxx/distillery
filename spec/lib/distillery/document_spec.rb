@@ -233,10 +233,12 @@ module Distillery
         subject.distill!.should_not =~ /Cindy said.../
       end
 
-      it 'keeps the encoding of the string was passed in to the constructor' do
-        string = "<html><body><p>foo</p></body></html>"
-        string.encode!('ISO-8859-1')
-        Document.new(string).distill!.encoding.name.should == 'ISO-8859-1'
+      if RUBY_VERSION =~ /^1.9/
+        it 'keeps the encoding of the string was passed in to the constructor' do
+          string = "<html><body><p>foo</p></body></html>"
+          string.encode!('ISO-8859-1')
+          Document.new(string).distill!.encoding.name.should == 'ISO-8859-1'
+        end
       end
 
       it 'does not clean the page if :dirty => true is passed' do
