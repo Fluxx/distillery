@@ -1,0 +1,3 @@
+- Remove HTMl comments from output
+- Convert newline breaks to paragraphs
+- Convert text nodes to <p> as well

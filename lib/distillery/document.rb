@@ -37,8 +37,6 @@ module Distillery
 
     # Corrects improper use of HTML tags by coerceing elements that are likely paragraphs
     # to <p> tags
-    #
-    # TODO: Convert text nodes to <p> as well
     def coerce_elements_to_paragraphs!
       search('div').each do |div|
         div.name = "p" if has_no_block_children?(div) || has_only_empty_div_children?(div)
@@ -96,7 +94,6 @@ module Distillery
       remove_irrelevant_elements!
       remove_unlikely_elements!
       coerce_elements_to_paragraphs!
-      # TODO: Convert newline breaks to paragraphs
     end
 
     private
