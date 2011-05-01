@@ -8,6 +8,10 @@ The logic for Distillery was heavily influenced by [Readability](https://www.rea
 
 Readability and Distillery share nearly the same logic for locating the content HTML element on the page.  Readability, however, also aggressively cleans and transforms the content element HTML to be used for display in a reading environment.  Distillery aims to clean slightly less aggressively, and allow the user of the gem to choose how (and if) they would like to clean content element HTML.
 
+## Installation
+
+    gem install distillery
+
 ## Usage
 
 Usage is quite simple:
@@ -28,3 +32,12 @@ Both the `Distill::Document#distill!` and `Distillery.distill` methods by defaul
 
     doc.distill!(:dirty => true)
     > "raw distilled content"
+
+## From the command line
+
+Distillery also ships with an executable that allows you to distill documents at the command line:
+
+    Usage: distill [options] http://www.example.com/
+        -d, --dirty        Do not clean content HTML
+        -v, --version      Print the version
+        -h, --help         Print this help message
