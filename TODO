@@ -1,3 +1,5 @@
+- Give users the possibility of preserving the HTML of the content element as it was seen.
+- Instead of a string, return a Node from Nokogiri
 - Remove HTMl comments from output
 - Convert newline breaks to paragraphs
 - Convert text nodes to <p> as well
