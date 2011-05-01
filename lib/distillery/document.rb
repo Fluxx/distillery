@@ -3,18 +3,41 @@ require "nokogiri"
 
 module Distillery
 
+  # Wraps a Nokogiri document for the HTML page to be disilled and holds all methods to
+  # clean and distill the document down to just its content element.
   class Document < SimpleDelegator
 
+    # HTML elements unlikely to contain the content element.
     UNLIKELY_TAGS = %w[head script link meta]
+
+    # HTML ids and classes that are unlikely to contain the content element.
     UNLIKELY_IDENTIFIERS = /combx|comment|disqus|foot|header|menu|meta|nav|rss|shoutbox|sidebar|sponsor/i
+
+    # "Block" elements who signal its parent is less-likely to be the content element.
     BLOCK_ELEMENTS = %w[a blockquote dl div img ol p pre table ul]
+
+    # HTML ids and classes that are positive signals of the content element.
     POSITIVE_IDENTIFIERS = /article|body|content|entry|hentry|page|pagination|post|text/i
+
+    # HTML ids and classes that are negative signals of the content element.
     NEGATIVE_IDENTIFIERS = /combx|comment|contact|foot|footer|footnote|link|media|meta|promo|related|scroll|shoutbox|sponsor|tags|widget/i
+
+    # HTML elements that are unrelated to the content in the content element.
     UNRELATED_ELEMENTS = %w[iframe form object]
+
+    # HTML elements that are possible unrelated to the content of the content HTML
+    # element.
     POSSIBLE_UNRELATED_ELEMENTS = %w[table ul div]
 
-    attr_reader :doc, :scores
+    # The Nokogiri document
+    attr_reader :doc
 
+    # Hash of xpath => content score of elements in this document
+    attr_reader :scores
+
+    # Create a new Document
+    #
+    # @param [String] str The HTML document to distill as a string.
     def initialize(page_string)
       @scores = Hash.new(0)
       super(::Nokogiri::HTML(page_string))
@@ -45,12 +68,6 @@ module Distillery
 
     # Scores the document elements based on an algorithm to find elements which hold page
     # content.
-    #
-    # Assign each paragraph a score
-    # - Point per comma
-    # - Point per set of 100 characters
-    # - Points for low link-density
-    # Parent gets sum of score of children, grandparent 1/2 the score of their children
     def score!
       search('p').each do |paragraph|
         points = 1
@@ -66,7 +83,10 @@ module Distillery
       augment_scores_by_link_weight!
     end
 
-    # Distills the document down to just its content
+    # Distills the document down to just its content.
+    #
+    # @param [Hash] options Distillation options
+    # @option options [Symbol] :dirty Do not clean the content element HTML
     def distill!(options = {})
       prep_for_distillation!
       score!
@@ -90,6 +110,8 @@ module Distillery
       end
     end
 
+    # Prepares the document for distillation by removing irrelevant and unlikely elements,
+    # as well as corecomg some elements to paragraphs for scoring.
     def prep_for_distillation!
       remove_irrelevant_elements!
       remove_unlikely_elements!
