@@ -26,9 +26,9 @@ Then you simply call `#distill!` on the document object to distill it and return
     doc.distill!
     > "distilled content"
 
-Both the `Distill::Document#distill!` and `Distillery.distill` methods by default will clean the HTML of the content to remove elements from it which are unlikely to be the actual content.  Usually, this is things like social media share buttons, widgets, advertisements, etc.  If you would like to not clean the content, simply pass `:dirty => true` to either method:
+Both the `Distill::Document#distill!` and `Distillery.distill` methods by default will clean the HTML of the content to remove elements from it which are unlikely to be the actual content.  Usually, this is things like social media share buttons, widgets, advertisements, etc.  If you would like to not clean the content, simply pass `:clean => false` to either method:
 
-    doc.distill!(:dirty => true)
+    doc.distill!(:clean => false)
     > "raw distilled content"
 
 ## From the command line
