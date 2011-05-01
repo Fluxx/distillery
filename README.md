@@ -2,8 +2,6 @@
 
 Distillery extracts the "content" portion out of an HTML document.  It applies heuristics based on element type, location, class/id name and other attributes to try and find the content part of the HTML document and return it.
 
-**Note: Distillery has only been tested with Ruby 1.9**
-
 The logic for Distillery was heavily influenced by [Readability](https://www.readability.com/), who was nice enough to make [their logic](http://code.google.com/p/arc90labs-readability/source/browse/trunk/js/readability.js) open source.  Distillery does *not* aim to be a direct port of that logic.  See [iterationlabs/ruby-readability](https://github.com/iterationlabs/ruby-readability) for something closer to that.
 
 Readability and Distillery share nearly the same logic for locating the content HTML element on the page.  Readability, however, also aggressively cleans and transforms the content element HTML to be used for display in a reading environment.  Distillery aims to clean slightly less aggressively, and allow the user of the gem to choose how (and if) they would like to clean content element HTML.
