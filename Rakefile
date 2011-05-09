@@ -19,7 +19,7 @@ namespace :fixture do
   task :score, :filename do |t, args|
     doc = doc_for_fixture(args[:filename])
 
-    doc.prep_for_distillation
+    doc.score!
     doc.scores.each do |xpath, score|
       doc.at(xpath)['data-score'] = score.to_s
     end
