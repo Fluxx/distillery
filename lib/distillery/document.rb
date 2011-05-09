@@ -141,7 +141,11 @@ module Distillery
     def top_scoring_element
       winner = scores.sort_by { |xpath, score| score }.reverse.first
       top_xpath, top_score = winner || ['/html/body', 1]
-      at(top_xpath)
+      at(top_xpath).tap do |winner|
+        winner.search('[data-distillery]').each do |element|
+          element.remove_attribute('data-distillery')
+        end
+      end
     end
 
     def scorable_div?(elem)

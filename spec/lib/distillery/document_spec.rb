@@ -259,6 +259,11 @@ module Distillery
       it 'works with a HTML document that has no winner' do
         document_of('foo').distill!.should == 'foo'
       end
+      
+      it 'does not return any elements with a data-distillery attribute' do
+        html = document_of('<div><p>Hello</p></div>')
+        document_of(html).distill!.should_not =~ /data-distillery/
+      end
 
     end
 
