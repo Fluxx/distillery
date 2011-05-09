@@ -106,3 +106,13 @@ distillation_of 'ginger_cookies.html' do
   should_not =~ /User Reviews/                                # Comments
   should_not =~ /Free Southern Food Newsletter!/              # Header
 end
+
+distillation_of 'bourbon_balls.html' do
+  should =~ /The Kentucky Derby will be run Saturday/
+  should =~ /Just drop one of your bourbon balls into a cup of coffee/
+  should =~ /You can also use the ganache as a cake frosting/
+
+  should_not =~ /I just tried the recipe forCellar Doo/       # Comments
+  should_not =~ /FIND A STATION/                              # Header
+  should_not =~ /Car Talk/                                    # Footer
+end

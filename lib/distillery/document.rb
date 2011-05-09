@@ -95,20 +95,22 @@ module Distillery
       score!
       clean_top_scoring_elements! unless options.delete(:clean) == false
 
-      top_scoring_elements.inner_html
+      top_scoring_elements.map(&:inner_html).join("\n")
     end
 
     # Attempts to clean the top scoring node from non-page content items, such as
     # advertisements, widgets, etc
     def clean_top_scoring_elements!
-      top_scoring_elements.search("*").each do |node|
-        node.remove if has_empty_text?(node)
-      end
+      top_scoring_elements.each do |element|
+        element.search("*").each do |node|
+          node.remove if has_empty_text?(node)
+        end
 
-      top_scoring_elements.search("*").each do |node|
-        if UNRELATED_ELEMENTS.include?(node.name) ||
-          (node.text.count(',') < 2 && unlikely_to_be_content?(node))
-          node.remove
+        element.search("*").each do |node|
+          if UNRELATED_ELEMENTS.include?(node.name) ||
+            (node.text.count(',') < 2 && unlikely_to_be_content?(node))
+            node.remove
+          end
         end
       end
     end
@@ -139,15 +141,26 @@ module Distillery
     end
 
     def top_scoring_elements
-      winner = scores.sort_by { |xpath, score| score }.reverse.first
+      # -score puts largest scores first, then by xpath to favor outter elements on tie
+      winner = scores.sort_by { |xpath, score| [-score, xpath] }.first
       top_xpath, top_score = winner || ['/html/body', 1]
       top_element = at(top_xpath)
-      
-      top_element.tap do |winner|
-        winner.search('[data-distillery]').each do |element|
+
+      top_elements = [top_element]
+
+      top_element.parent.children.each do |sibling|
+        if scores[sibling.path] > top_score*0.25 && sibling.path != top_element.path
+          top_elements << sibling
+        end
+      end
+
+      top_elements.each do |element|
+        element.search('[data-distillery]').each do |element|
           element.remove_attribute('data-distillery')
         end
       end
+
+      top_elements
     end
 
     def scorable_div?(elem)

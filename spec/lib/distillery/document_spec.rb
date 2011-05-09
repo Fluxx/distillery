@@ -259,10 +259,22 @@ module Distillery
       it 'works with a HTML document that has no winner' do
         document_of('foo').distill!.should == 'foo'
       end
-      
+
       it 'does not return any elements with a data-distillery attribute' do
         html = document_of('<div><p>Hello</p></div>')
         document_of(html).distill!.should_not =~ /data-distillery/
+      end
+
+      it 'picks the outtermost element in the event of a tie' do
+        doc = document_of("<div><div class='included'>#{'f,'*10}</div></div>")
+        doc.distill!.should =~ /included/
+        doc.scores['/html/body/div/div'].should == 11
+        doc.scores['/html/body/div'].should == 11
+      end
+
+      it 'returns sibling elements to the top scoring one that have > 25% of the top scoring element\'s score' do
+        doc = document_of("<div><div>#{'f,'*10}</div></div><div><div class='me_too'>#{'f,'*5}</div></div>")
+        doc.distill!.should =~ /me_too/
       end
 
     end
