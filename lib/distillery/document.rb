@@ -58,24 +58,27 @@ module Distillery
       end
     end
 
-    # Corrects improper use of HTML tags by coerceing elements that are likely paragraphs
-    # to <p> tags
-    def coerce_elements_to_paragraphs!
-      search('div').each do |div|
-        div.name = "p" if has_no_block_children?(div) || has_only_empty_div_children?(div)
+    # Marks elements that are suitable for scoring with a special HTML attribute
+    def mark_scorable_elements!
+      search('div', 'p').each do |element|
+        if element.name == 'p' || scorable_div?(element)
+          element['data-distillery'] = 'scorable'
+        end
       end
     end
 
     # Scores the document elements based on an algorithm to find elements which hold page
     # content.
     def score!
-      search('p').each do |paragraph|
-        points = 1
-        points += paragraph.text.split(',').length
-        points += [paragraph.text.length / 100, 3].min
+      mark_scorable_elements!
 
-        scores[paragraph.path] = points
-        parent = paragraph.parent
+      scorable_elements.each do |element|
+        points = 1
+        points += element.text.split(',').length
+        points += [element.text.length / 100, 3].min
+
+        scores[element.path] = points
+        parent = element.parent
         scores[parent.path] += points
         scores[parent.parent.path] += points.to_f/2
       end
@@ -115,10 +118,13 @@ module Distillery
     def prep_for_distillation!
       remove_irrelevant_elements!
       remove_unlikely_elements!
-      coerce_elements_to_paragraphs!
     end
 
     private
+
+    def scorable_elements
+      search('[data-distillery=scorable]')
+    end
 
     def augment_scores_by_link_weight!
       scores.each do |xpath, points|
@@ -136,6 +142,11 @@ module Distillery
       winner = scores.sort_by { |xpath, score| score }.reverse.first
       top_xpath, top_score = winner || ['/html/body', 1]
       at(top_xpath)
+    end
+
+    def scorable_div?(elem)
+      elem.name == 'div' &&
+        (has_no_block_children?(elem) || has_only_empty_div_children?(elem))
     end
 
     def has_no_block_children?(elem)

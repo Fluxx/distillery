@@ -74,21 +74,26 @@ module Distillery
 
     end
 
-    describe 'coerce_elements_to_paragraphs!' do
+    describe 'mark_scorable_elements!' do
 
-      it 'converts divs who have no children to paragraphs' do
-        doc = document_of("<div>foo</div>", :coerce_elements_to_paragraphs!)
-        doc.inner_html.should == html_of("<p>foo</p>")
+      it 'marks divs who have no children to paragraphs' do
+        doc = document_of("<div>foo</div>", :mark_scorable_elements!)
+        doc.inner_html.should == html_of('<div data-distillery="scorable">foo</div>')
       end
 
-      it 'converts divs who have children that are not block-level elements to paragraphs' do
-        doc = document_of("<div><span>foo</span></div>", :coerce_elements_to_paragraphs!)
-        doc.inner_html.should == html_of("<p><span>foo</span></p>")
+      it 'marks divs who have children that are not block-level elements to paragraphs' do
+        doc = document_of("<div><span>foo</span></div>", :mark_scorable_elements!)
+        doc.inner_html.should == html_of('<div data-distillery="scorable"><span>foo</span></div>')
       end
 
-      it 'converts divs whose have empty child divs to paragrahs' do
-        doc = document_of("<div><pre>foo</pre><div></div></div>", :coerce_elements_to_paragraphs!)
-        doc.inner_html.gsub("\n", "").should == html_of("<p><pre>foo</pre><p></p></p>")
+      it 'marks divs whose have empty child divs to paragrahs' do
+        doc = document_of("<div><pre>foo</pre><div></div></div>", :mark_scorable_elements!)
+        doc.inner_html.gsub("\n", "").should == html_of('<div data-distillery="scorable"><pre>foo</pre><div data-distillery="scorable"></div></div>')
+      end
+
+      it 'marks all paragraphs' do
+        doc = document_of("<p>foo</p><p></p></p>", :mark_scorable_elements!)
+        doc.inner_html.gsub("\n", "").should == html_of('<p data-distillery="scorable">foo</p><p data-distillery="scorable"></p>')
       end
 
     end
@@ -102,10 +107,12 @@ module Distillery
         subject.scores.should_not be_empty
       end
 
-      it 'only calculates scores for paragraphs' do
-        doc = document_of("<p>foo</p><div>bar</div>", :score!)
+      it 'calculates scores for divs that are empty or have no block level children' do
+        doc = document_of("<div><div><div><div>bar</div></div></div></div>", :score!)
+        doc.scores.should have_key('/html/body/div/div/div/div')
+        doc.scores.should have_key('/html/body/div/div/div')
+        doc.scores.should have_key('/html/body/div/div')
         doc.scores.should_not have_key('/html/body/div')
-        doc.scores.should have_key('/html/body/p')
       end
 
       it 'gives one point per comma in the text of an element' do
@@ -122,14 +129,14 @@ module Distillery
       end
 
       it 'adds its own points to its parent' do
-        doc = document_of("<p><div><p>foo</p></div></p>", :score!)
-        doc.scores['/html/body/div/p'].should == 2
+        doc = document_of("<div><div>foo</div></div>", :score!)
+        doc.scores['/html/body/div/div'].should == 2
         doc.scores['/html/body/div'].should == 2
       end
 
       it 'adds 1/2 its points to its grandparent' do
-        doc = document_of("<p><div><div><p>foo</p></div></div></p>", :score!)
-        doc.scores['/html/body/div/div/p'].should == 2
+        doc = document_of("<div><div><div>foo</div></div></div>", :score!)
+        doc.scores['/html/body/div/div/div'].should == 2
         doc.scores['/html/body/div/div'].should == 2
         doc.scores['/html/body/div'].should == 1
       end
@@ -153,7 +160,7 @@ module Distillery
       end
 
       it 'does not remove <br> elements' do
-        doc = doc_with_top_scored_html_of("<div>foo<br class='noremove' /></div>", :clean_top_scoring_element!)
+        doc = doc_with_top_scored_html_of("<div>foo,foo,foo<br class='noremove' /></div>", :clean_top_scoring_element!)
         doc.search('.noremove').should_not be_empty
       end
 
