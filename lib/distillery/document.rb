@@ -93,19 +93,19 @@ module Distillery
     def distill!(options = {})
       prep_for_distillation!
       score!
-      clean_top_scoring_element! unless options.delete(:clean) == false
+      clean_top_scoring_elements! unless options.delete(:clean) == false
 
-      top_scoring_element.inner_html
+      top_scoring_elements.inner_html
     end
 
     # Attempts to clean the top scoring node from non-page content items, such as
     # advertisements, widgets, etc
-    def clean_top_scoring_element!
-      top_scoring_element.search("*").each do |node|
+    def clean_top_scoring_elements!
+      top_scoring_elements.search("*").each do |node|
         node.remove if has_empty_text?(node)
       end
 
-      top_scoring_element.search("*").each do |node|
+      top_scoring_elements.search("*").each do |node|
         if UNRELATED_ELEMENTS.include?(node.name) ||
           (node.text.count(',') < 2 && unlikely_to_be_content?(node))
           node.remove
@@ -138,10 +138,12 @@ module Distillery
       link_length.to_f / total_length.to_f
     end
 
-    def top_scoring_element
+    def top_scoring_elements
       winner = scores.sort_by { |xpath, score| score }.reverse.first
       top_xpath, top_score = winner || ['/html/body', 1]
-      at(top_xpath).tap do |winner|
+      top_element = at(top_xpath)
+      
+      top_element.tap do |winner|
         winner.search('[data-distillery]').each do |element|
           element.remove_attribute('data-distillery')
         end

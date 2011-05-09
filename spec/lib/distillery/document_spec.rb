@@ -155,65 +155,65 @@ module Distillery
       end
 
       it 'removes all empty elements' do
-        doc = doc_with_top_scored_html_of("<div>foo <span></span</div>", :clean_top_scoring_element!)
+        doc = doc_with_top_scored_html_of("<div>foo <span></span</div>", :clean_top_scoring_elements!)
         doc.search('span').should be_empty
       end
 
       it 'does not remove <br> elements' do
-        doc = doc_with_top_scored_html_of("<div>foo,foo,foo<br class='noremove' /></div>", :clean_top_scoring_element!)
+        doc = doc_with_top_scored_html_of("<div>foo,foo,foo<br class='noremove' /></div>", :clean_top_scoring_elements!)
         doc.search('.noremove').should_not be_empty
       end
 
       %w[iframe form object].each do |tag|
         it "removes any #{tag} elements" do
-          doc = doc_with_top_scored_html_of("foo <#{tag}></#{tag}>", :clean_top_scoring_element!)
+          doc = doc_with_top_scored_html_of("foo <#{tag}></#{tag}>", :clean_top_scoring_elements!)
           doc.search(tag).should be_empty
         end
       end
 
       it 'removes elements that have negative scores' do
-        doc = doc_with_top_scored_html_of("<div class='widget'><div>bar</div></div>", :clean_top_scoring_element!)
+        doc = doc_with_top_scored_html_of("<div class='widget'><div>bar</div></div>", :clean_top_scoring_elements!)
         doc.search('.widget').should be_empty
       end
 
       it 'removes elements that have more images than p tags' do
-        doc = doc_with_top_scored_html_of("<div class='remove'><img><img><img><p>bar</p><div>foo</div></div>", :clean_top_scoring_element!)
+        doc = doc_with_top_scored_html_of("<div class='remove'><img><img><img><p>bar</p><div>foo</div></div>", :clean_top_scoring_elements!)
         doc.search('.remove').should be_empty
       end
 
       it 'removes elements that have way more li elements and it is not a list' do
-        doc = doc_with_top_scored_html_of("<div class='remove'><div>me<ul>#{'<li>a</li>'*200}</ul></div></div>", :clean_top_scoring_element!)
+        doc = doc_with_top_scored_html_of("<div class='remove'><div>me<ul>#{'<li>a</li>'*200}</ul></div></div>", :clean_top_scoring_elements!)
         doc.search('.remove').should be_empty
       end
 
       it 'removes elements that have more inputs than 1/3 the amount of p tags' do
-        doc = doc_with_top_scored_html_of("<div class='remove'><div><input><input><p>f</p><p>f</p><p>f</p></div></div>", :clean_top_scoring_element!)
+        doc = doc_with_top_scored_html_of("<div class='remove'><div><input><input><p>f</p><p>f</p><p>f</p></div></div>", :clean_top_scoring_elements!)
         doc.search('.remove').should be_empty
 
-        doc = doc_with_top_scored_html_of("<div class='remove'><input><p>#{'f'*25}</p><p>f</p><p>f</p></div>", :clean_top_scoring_element!)
+        doc = doc_with_top_scored_html_of("<div class='remove'><input><p>#{'f'*25}</p><p>f</p><p>f</p></div>", :clean_top_scoring_elements!)
         doc.search('.remove').should_not be_empty
       end
 
       it 'removes elements that have < 25 characters and (no images or > 2 images' do
-        doc = doc_with_top_scored_html_of("<div class='remove'><div>foo</div></div>", :clean_top_scoring_element!)
+        doc = doc_with_top_scored_html_of("<div class='remove'><div>foo</div></div>", :clean_top_scoring_elements!)
         doc.search('.remove').should be_empty
 
-        doc = doc_with_top_scored_html_of("<div class='remove'><div>foo <img><img><img></div></div>", :clean_top_scoring_element!)
+        doc = doc_with_top_scored_html_of("<div class='remove'><div>foo <img><img><img></div></div>", :clean_top_scoring_elements!)
         doc.search('.remove').should be_empty
       end
 
       it 'removes elements that have a weight of < 25 and link density > 0.2' do
-        doc = doc_with_top_scored_html_of("<div class='remove'><div>fffff<a>#{'b'*2}</a></div></div>", :clean_top_scoring_element!)
+        doc = doc_with_top_scored_html_of("<div class='remove'><div>fffff<a>#{'b'*2}</a></div></div>", :clean_top_scoring_elements!)
         doc.search('.remove').should be_empty
       end
 
       it 'removes elements that have a weight of >= 25 and link density > 0.5' do
-        doc = doc_with_top_scored_html_of("<div class='remove article'><div>#{'f'*100}<a>#{'b'*150}</a></div></div>", :clean_top_scoring_element!)
+        doc = doc_with_top_scored_html_of("<div class='remove article'><div>#{'f'*100}<a>#{'b'*150}</a></div></div>", :clean_top_scoring_elements!)
         doc.search('.remove').should be_empty
       end
 
       it 'should not clean the conntent elements not of table ul or div' do
-        doc = doc_with_top_scored_html_of("<span class='remove'><strong>Source:</strong> Wikipedia</span>", :clean_top_scoring_element!)
+        doc = doc_with_top_scored_html_of("<span class='remove'><strong>Source:</strong> Wikipedia</span>", :clean_top_scoring_elements!)
         doc.search('.remove').should_not be_empty
       end
 
