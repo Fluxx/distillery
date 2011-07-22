@@ -257,6 +257,12 @@ module Distillery
         doc.distill!.should_not =~ /Add to Recipe Box/
       end
 
+      it 'keeps images if the :images => true option is passed' do
+        doc = Document.new(File.open('./spec/fixtures/rhubarb.html').read)
+        ::Nokogiri::HTML.fragment(doc.dup.distill!).css('img').should be_empty
+        ::Nokogiri::HTML.fragment(doc.dup.distill!(:images => true)).css('img').should_not be_empty
+      end
+
       it 'works with a HTML document that has no winner' do
         document_of('foo').distill!.should == 'foo'
       end

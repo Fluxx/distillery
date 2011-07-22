@@ -9,6 +9,7 @@ require 'slop'
 opts = Slop.parse :help => true do
 
   on :d, :dirty, 'Do not clean content HTML', default: false
+  on :i, :images, 'Keep images in the content HTML', default: false
   on :v, :version, 'Print the version' do
     puts Distillery::VERSION
     exit
@@ -20,5 +21,7 @@ end
 unless ARGV.last =~ /^http/
   puts opts.help
 else
-  puts Distillery.distill(open(ARGV.last).read, :clean => !opts.dirty?)
+  puts Distillery.distill(open(ARGV.last).read,
+    :clean => !opts.dirty?,
+    :images => opts.images?)
 end

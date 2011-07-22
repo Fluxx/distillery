@@ -35,6 +35,11 @@ Both the `Distillery::Document#distill!` and `Distillery.distill` methods by def
     doc.distill!(:clean => false)
     > "raw distilled content"
 
+In its cleaning, Distillery will also remove all `<img>` tags from the content element.  If you would like to preserve `<img>` tags, pass the `:images => true` option to the `Distillery::Document#distill!` and `Distillery.distill` methods.  Please note that this will preserve any elements that wrap `<img>` tags that would have been removed under normal circumstances during cleaning.
+
+    doc.distill!(:images => true)
+    > "raw distilled content with <img src=\"info.png\">"
+
 ## From the command line
 
 Distillery also ships with an executable that allows you to distill documents at the command line:

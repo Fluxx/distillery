@@ -92,23 +92,27 @@ module Distillery
     def distill!(options = {})
       remove_irrelevant_elements!
       remove_unlikely_elements!
-      
-      score!
-      
-      clean_top_scoring_elements! unless options.delete(:clean) == false
 
+      score!
+
+      clean_top_scoring_elements!(options) unless options.delete(:clean) == false
       top_scoring_elements.map(&:inner_html).join("\n")
     end
 
     # Attempts to clean the top scoring node from non-page content items, such as
     # advertisements, widgets, etc
-    def clean_top_scoring_elements!
+    def clean_top_scoring_elements!(options = {})
+      keep_images = !!options[:images]
+
       top_scoring_elements.each do |element|
+
         element.search("*").each do |node|
+          next if (node.name == 'img' || node.children.css('img').any?) && keep_images
           node.remove if has_empty_text?(node)
         end
 
         element.search("*").each do |node|
+          next if node.name == 'img' && keep_images
           if UNRELATED_ELEMENTS.include?(node.name) ||
             (node.text.count(',') < 2 && unlikely_to_be_content?(node))
             node.remove
