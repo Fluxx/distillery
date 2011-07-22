@@ -151,7 +151,8 @@ module Distillery
     describe 'clean_top_scoring_element!' do
       def doc_with_top_scored_html_of(markup, *postprocessing)
         markup = '<div class="winner">' + ('<p>foo,</p>'*5) + markup + '</div>'
-        document_of(markup, *[:prep_for_distillation!, :score!].push(*postprocessing))
+        prep = [:remove_irrelevant_elements!, :remove_unlikely_elements!, :score!]
+        document_of(markup, *prep.push(*postprocessing))
       end
 
       it 'removes all empty elements' do

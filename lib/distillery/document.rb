@@ -78,9 +78,8 @@ module Distillery
         points += [element.text.length / 100, 3].min
 
         scores[element.path] = points
-        parent = element.parent
-        scores[parent.path] += points
-        scores[parent.parent.path] += points.to_f/2
+        scores[element.parent.path] += points
+        scores[element.parent.parent.path] += points.to_f/2
       end
 
       augment_scores_by_link_weight!
@@ -91,8 +90,11 @@ module Distillery
     # @param [Hash] options Distillation options
     # @option options [Symbol] :dirty Do not clean the content element HTML
     def distill!(options = {})
-      prep_for_distillation!
+      remove_irrelevant_elements!
+      remove_unlikely_elements!
+      
       score!
+      
       clean_top_scoring_elements! unless options.delete(:clean) == false
 
       top_scoring_elements.map(&:inner_html).join("\n")
@@ -113,13 +115,6 @@ module Distillery
           end
         end
       end
-    end
-
-    # Prepares the document for distillation by removing irrelevant and unlikely elements,
-    # as well as corecomg some elements to paragraphs for scoring.
-    def prep_for_distillation!
-      remove_irrelevant_elements!
-      remove_unlikely_elements!
     end
 
     private
