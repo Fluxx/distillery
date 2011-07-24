@@ -263,6 +263,12 @@ module Distillery
         ::Nokogiri::HTML.fragment(doc.dup.distill!(:images => true)).css('img').should_not be_empty
       end
 
+      it 'finds images when the image is wrapped by an unrelated element that would be cleaned' do
+        doc = Document.new(File.open('./spec/fixtures/forest_ham.html').read)
+        ::Nokogiri::HTML.fragment(doc.dup.distill!).css('img').should be_empty
+        ::Nokogiri::HTML.fragment(doc.dup.distill!(:images => true)).css('img').should_not be_empty
+      end
+
       it 'works with a HTML document that has no winner' do
         document_of('foo').distill!.should == 'foo'
       end

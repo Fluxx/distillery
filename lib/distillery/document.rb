@@ -107,12 +107,12 @@ module Distillery
       top_scoring_elements.each do |element|
 
         element.search("*").each do |node|
-          next if (node.name == 'img' || node.children.css('img').any?) && keep_images
+          next if contains_content_image?(node) && keep_images
           node.remove if has_empty_text?(node)
         end
 
         element.search("*").each do |node|
-          next if node.name == 'img' && keep_images
+          next if contains_content_image?(node) && keep_images
           if UNRELATED_ELEMENTS.include?(node.name) ||
             (node.text.count(',') < 2 && unlikely_to_be_content?(node))
             node.remove
@@ -122,6 +122,10 @@ module Distillery
     end
 
     private
+
+    def contains_content_image?(node)
+      node.name == 'img' || node.children.css('img').length == 1
+    end
 
     def scorable_elements
       search('[data-distillery=scorable]')
