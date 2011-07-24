@@ -148,9 +148,7 @@ module Distillery
       top_elements = [top_element]
 
       top_element.parent.children.each do |sibling|
-        if scores[sibling.path] > top_score*0.25 && sibling.path != top_element.path
-          top_elements << sibling
-        end
+        top_elements << sibling if related_sibling?(top_element, sibling)
       end
 
       top_elements.each do |element|
@@ -160,6 +158,19 @@ module Distillery
       end
 
       top_elements
+    end
+
+    def related_sibling?(top_element, sibling)
+      score = scores[sibling.path]
+      top_score = scores[top_element.path]
+      identical = identical_attrubutes?(top_element, sibling)
+
+      (score > top_score*025 || (identical && score > top_score*0.05)) &&
+      sibling.path != top_element.path
+    end
+
+    def identical_attrubutes?(a, b)
+      a['id'] == b['id'] && a['class'] == b['class']
     end
 
     def scorable_div?(elem)

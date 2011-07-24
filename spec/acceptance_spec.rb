@@ -116,3 +116,8 @@ distillation_of 'bourbon_balls.html' do
   should_not =~ /FIND A STATION/                              # Header
   should_not =~ /Car Talk/                                    # Footer
 end
+
+distillation_of 'bulgogi.html' do
+  should =~ /early-season barbecue/
+  should =~ /Still, it is American to not fuss/
+end
