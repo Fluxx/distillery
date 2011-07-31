@@ -290,6 +290,11 @@ module Distillery
         doc.distill!.should =~ /me_too/
       end
 
+      it "returns sibling elements to the top scoring one that have the same class or style and 5% of the top element's score" do
+        doc = document_of("<div id='winner'><div>#{'f,'*100}</div></div><div id='winner'><div class='me_too'>#{'m,'*6}</div></div>")
+        doc.distill!.should =~ /me_too/
+      end
+
     end
 
   end

@@ -169,8 +169,8 @@ module Distillery
       top_score = scores[top_element.path]
       identical = identical_attrubutes?(top_element, sibling)
 
-      related = (score > top_score*0.25 && sibling.path != top_element.path) ||
-                (identical && score > top_score*0.05)
+      related = (score > top_score*0.25 || (identical && score > top_score*0.05)) &&
+                 sibling.path != top_element.path
     end
 
     def identical_attrubutes?(a, b)
