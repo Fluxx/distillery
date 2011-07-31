@@ -45,6 +45,10 @@ In its cleaning, Distillery will also remove all `<img>` tags from the content e
 Distillery also ships with an executable that allows you to distill documents at the command line:
 
     Usage: distill [options] http://www.example.com/
+
+    options:
+
         -d, --dirty        Do not clean content HTML
+        -i, --images       Keep images in the content HTML
         -v, --version      Print the version
         -h, --help         Print this help message
