@@ -149,7 +149,7 @@ module Distillery
       top_xpath, top_score = winner || ['/html/body', 1]
       top_element = at(top_xpath)
 
-      top_elements = [top_element]
+      top_elements = []
 
       top_element.parent.children.each do |sibling|
         top_elements << sibling if related_sibling?(top_element, sibling)
@@ -169,8 +169,8 @@ module Distillery
       top_score = scores[top_element.path]
       identical = identical_attrubutes?(top_element, sibling)
 
-      related = (score > top_score*0.25 || (identical && score > top_score*0.05)) &&
-                 sibling.path != top_element.path
+      related = score > top_score*0.25 || (identical && score > top_score*0.05) ||
+                sibling.path == top_element.path
     end
 
     def identical_attrubutes?(a, b)

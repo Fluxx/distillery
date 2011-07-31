@@ -118,6 +118,7 @@ distillation_of 'bourbon_balls.html' do
 end
 
 distillation_of 'bulgogi.html' do
+  subject.slice(0..100).should include('looking to create a menu')
   subject.scan(/American to not fuss about the origin/).should have(1).result
   should =~ /early-season barbecue/
   should =~ /Still, it is American to not fuss/
