@@ -123,3 +123,11 @@ distillation_of 'bulgogi.html' do
   should =~ /early-season barbecue/
   should =~ /Still, it is American to not fuss/
 end
+
+distillation_of 'tofu_bowl.html' do
+  subject.should =~ /Whisk together/
+  subject.should =~ /minced fresh ginger/
+  subject.should_not =~ /Add a comment/                          # Comment
+  subject.should_not =~ /this is the best comfort food/          # Comment
+  subject.should_not =~ /Please send me my 2 FREE trial/         # Footer
+end

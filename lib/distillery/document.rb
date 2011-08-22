@@ -178,8 +178,12 @@ module Distillery
     end
 
     def scorable_div?(elem)
+      idclass = elem['id'].to_s + elem['class'].to_s
+
       elem.name == 'div' &&
-        (has_no_block_children?(elem) || has_only_empty_div_children?(elem))
+        (has_no_block_children?(elem) ||
+        has_only_empty_div_children?(elem) ||
+        idclass =~ POSITIVE_IDENTIFIERS)
     end
 
     def has_no_block_children?(elem)
