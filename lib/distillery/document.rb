@@ -27,7 +27,7 @@ module Distillery
 
     # HTML elements that are possible unrelated to the content of the content HTML
     # element.
-    POSSIBLE_UNRELATED_ELEMENTS = %w[table ul div]
+    POSSIBLE_UNRELATED_ELEMENTS = %w[table ul div a]
 
     # The Nokogiri document
     attr_reader :doc
