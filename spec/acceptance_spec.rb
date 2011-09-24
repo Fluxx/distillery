@@ -131,3 +131,11 @@ distillation_of 'tofu_bowl.html' do
   subject.should_not =~ /this is the best comfort food/          # Comment
   subject.should_not =~ /Please send me my 2 FREE trial/         # Footer
 end
+
+distillation_of 'pumpkin_scones.html' do
+  subject.should =~ /Starbucks Pumpkin Scones Recipe/
+  subject.should =~ /These pumpkin scones are so moist and flavorful/
+  subject.should =~ /Makes 6 pumpkin scones/
+  subject.should_not =~ /NEWEST RECIPES/
+  subject.should_not =~ /Family Life/
+end

@@ -11,7 +11,7 @@ module Distillery
     UNLIKELY_TAGS = %w[head script link meta]
 
     # HTML ids and classes that are unlikely to contain the content element.
-    UNLIKELY_IDENTIFIERS = /combx|comment|disqus|foot|header|menu|meta|nav|rss|shoutbox|sidebar|sponsor/i
+    UNLIKELY_IDENTIFIERS = /combx|comment|disqus|foot|header|meta|nav|rss|shoutbox|sidebar|sponsor/i
 
     # "Block" elements who signal its parent is less-likely to be the content element.
     BLOCK_ELEMENTS = %w[a blockquote dl div img ol p pre table ul]
