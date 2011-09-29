@@ -220,7 +220,6 @@ module Distillery
       img > p ||                                           # More images than paragraphs
       li > p && !(elem.name =~ /ul|ol/) ||                 # Has lots of list items
       input > p / 3 ||                                     # Has a high % of inputs
-      elem.text.length < 25 && (img == 0 || img > 2) ||    # Short text + no/high img count
       weight < 25 && link_density > 0.2 ||                 # Weak content signal and moderate link density
       weight >= 25 && link_density > 0.5                   # Strong content signal and high link density
     end

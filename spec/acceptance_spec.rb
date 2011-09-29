@@ -139,3 +139,11 @@ distillation_of 'pumpkin_scones.html' do
   subject.should_not =~ /NEWEST RECIPES/
   subject.should_not =~ /Family Life/
 end
+
+distillation_of 'bilays.html' do
+  subject.should =~ %r|http://smittenkitchen.com/2008/03/swiss-easter-rice-tart/|
+  subject.should =~ /The Bread Bible/
+  subject.should =~ /Arugula Ravioli/
+  subject.should_not =~ /homemade chocolate wafers + icebox cupcakes/
+  subject.should_not =~ /Would I be able to simply knead/
+end

@@ -195,14 +195,6 @@ module Distillery
         doc.search('.remove').should_not be_empty
       end
 
-      it 'removes elements that have < 25 characters and (no images or > 2 images' do
-        doc = doc_with_top_scored_html_of("<div class='remove'><div>foo</div></div>", :clean_top_scoring_elements!)
-        doc.search('.remove').should be_empty
-
-        doc = doc_with_top_scored_html_of("<div class='remove'><div>foo <img><img><img></div></div>", :clean_top_scoring_elements!)
-        doc.search('.remove').should be_empty
-      end
-
       it 'removes elements that have a weight of < 25 and link density > 0.2' do
         doc = doc_with_top_scored_html_of("<div class='remove'><div>fffff<a>#{'b'*2}</a></div></div>", :clean_top_scoring_elements!)
         doc.search('.remove').should be_empty
