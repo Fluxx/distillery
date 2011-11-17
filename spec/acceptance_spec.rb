@@ -42,6 +42,11 @@ distillation_of 'beef_jerkey.html' do
   should =~ /2 pounds trimmed beef top round/
   should =~ /Om nom nom nom/
 
+  # Verify links are kept
+  should =~ Regexp.new('http://www.foodandwine.com/recipes/sweet-and-spicy-jerky')
+  should =~ Regexp.new('http://www.foodandwine.com/recipes/mexican-lime-jerky')
+  should =~ Regexp.new('http://en.wordpress.com/tag/beef-jerky/')
+
   should_not =~ /Leave a Reply/                             # Footer
   should_not =~ /EMAIL SUBSCRIPTION/                        # Sidebar
   should_not =~ /allthingssimpleblog.com\/feed\//           # Header
@@ -95,6 +100,9 @@ distillation_of 'nyt_social_media.html' do
   should_not =~ /ADD A COMMENT/                             # Comments
   should_not =~ /ABOUT 1,000 POSTS AGO/                     # Sidebar
   should_not =~ /iPhone Tracker: How your/                  # Header
+
+  # Verify links are kept
+  should =~ Regexp.new('http://nytlabs.com/projects/cascade.html')
 end
 
 distillation_of 'ginger_cookies.html' do
@@ -147,4 +155,10 @@ distillation_of 'bilays.html' do
   subject.should =~ /Arugula Ravioli/
   subject.should_not =~ /homemade chocolate wafers + icebox cupcakes/
   subject.should_not =~ /Would I be able to simply knead/
+
+  # Verify links are kept
+  subject.should =~ Regexp.new('http://smittenkitchen.com/2007/09/bronx-worthy-bagels/')
+  subject.should =~ Regexp.new('http://smittenkitchen.com/2008/03/swiss-easter-rice-tart/')
+  subject.should =~ Regexp.new('http://astore.amazon.com/smitten-20/detail/0393057941')
+  subject.should =~ Regexp.new('http://www.kossarsbialys.com/')
 end
