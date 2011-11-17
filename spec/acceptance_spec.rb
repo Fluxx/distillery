@@ -122,6 +122,7 @@ distillation_of 'bulgogi.html' do
   subject.scan(/American to not fuss about the origin/).should have(1).result
   should =~ /early-season barbecue/
   should =~ /Still, it is American to not fuss/
+  should =~ /vegetarians/                                     # Related link
 end
 
 distillation_of 'tofu_bowl.html' do

@@ -23,7 +23,7 @@ module Distillery
     POSITIVE_IDENTIFIERS = /article|body|content|entry|hentry|page|pagination|post|text/i
 
     # HTML ids and classes that are negative signals of the content element.
-    NEGATIVE_IDENTIFIERS = /combx|comment|contact|foot|footer|footnote|link|media|meta|promo|related|scroll|shoutbox|sponsor|tags|widget/i
+    NEGATIVE_IDENTIFIERS = /combx|comment|contact|foot|footer|footnote|link|media|promo|related|scroll|shoutbox|sponsor|tags|widget/i
 
     # HTML elements that are unrelated to the content in the content element.
     UNRELATED_ELEMENTS = %w[iframe form object]
@@ -31,6 +31,10 @@ module Distillery
     # HTML elements that are possible unrelated to the content of the content HTML
     # element.
     POSSIBLE_UNRELATED_ELEMENTS = %w[table ul div a]
+
+    # The ratio to the top element's score an indentically class/id'd sibling
+    # needs to have in order to be considered related.
+    RELATED_SCORE_RATIO = 0.045
 
     # The Nokogiri document
     attr_reader :doc
@@ -171,11 +175,12 @@ module Distillery
     end
 
     def related_sibling?(top_element, sibling)
-      score = scores[sibling.path]
+      sibling_score = scores[sibling.path]
       top_score = scores[top_element.path]
       identical = identical_attrubutes?(top_element, sibling)
 
-      related = score > top_score*0.25 || (identical && score > top_score*0.05) ||
+      related = sibling_score > top_score*0.25 ||
+                (identical && sibling_score > top_score*RELATED_SCORE_RATIO) ||
                 sibling.path == top_element.path
     end
 
@@ -203,7 +208,8 @@ module Distillery
     def identifier_weight(elem)
       {POSITIVE_IDENTIFIERS => 25, NEGATIVE_IDENTIFIERS => -25}.reduce(0) do |weight, pair|
         regex, score = pair
-        (weight += score if "#{elem['class']}+#{elem['id']}" =~ regex) or weight
+        matchstring = elem['class'].to_s + elem['id'].to_s + elem['name'].to_s
+        (weight += score if matchstring =~ regex) or weight
       end
     end
 
@@ -220,9 +226,11 @@ module Distillery
       input = elem.search('input').length
       weight = identifier_weight(elem)
       link_density = link_density(elem)
+      is_anchor = elem.name == 'a'
 
       weight < 0 ||                                        # Terrible weight
-      elem.text.empty? || elem.text.length < 15 ||         # Empty text or too short text
+      elem.text.empty? ||                                  # Empty text
+      (!is_anchor && elem.text.length < 15) ||             # Short text and not a link
       img > p ||                                           # More images than paragraphs
       li > p && !(elem.name =~ /ul|ol/) ||                 # Has lots of list items
       input > p / 3 ||                                     # Has a high % of inputs
