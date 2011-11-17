@@ -13,6 +13,9 @@ module Distillery
     # HTML ids and classes that are unlikely to contain the content element.
     UNLIKELY_IDENTIFIERS = /combx|comment|disqus|foot|header|meta|nav|rss|shoutbox|sidebar|sponsor/i
 
+    # Elements that are whitelisted from being removed as unlikely elements
+    REMOVAL_WHITELIST = %w[a body]
+
     # "Block" elements who signal its parent is less-likely to be the content element.
     BLOCK_ELEMENTS = %w[a blockquote dl div img ol p pre table ul]
 
@@ -54,7 +57,10 @@ module Distillery
     def remove_unlikely_elements!
       search('*').each do |element|
         idclass = "#{element['class']}#{element['id']}"
-        element.remove if idclass =~ UNLIKELY_IDENTIFIERS && element.name != 'body'
+
+        if idclass =~ UNLIKELY_IDENTIFIERS && !REMOVAL_WHITELIST.include?(element.name)
+          element.remove
+        end
       end
     end
 
