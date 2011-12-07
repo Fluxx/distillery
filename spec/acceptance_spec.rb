@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-def distillation_of(filename, &block)
+def distillation_of(filename, options = {}, &block)
 
   describe "distillation of #{filename}" do
 
@@ -8,7 +8,7 @@ def distillation_of(filename, &block)
       File.read(File.join(File.dirname(__FILE__), 'fixtures', filename))
     end
 
-    subject { Distillery::Document.new(fixture).distill! }
+    subject { Distillery::Document.new(fixture).distill!(options) }
 
     it 'should include the right elements' do
       instance_eval(&block)
@@ -161,4 +161,11 @@ distillation_of 'bilays.html' do
   subject.should =~ Regexp.new('http://smittenkitchen.com/2008/03/swiss-easter-rice-tart/')
   subject.should =~ Regexp.new('http://astore.amazon.com/smitten-20/detail/0393057941')
   subject.should =~ Regexp.new('http://www.kossarsbialys.com/')
+end
+
+distillation_of 'maple_cookies.html', images: true do
+  subject.should =~ %r|http://farm8.staticflickr.com/7010/6466770921_6cdc30e27e.jpg|
+  subject.should =~ %r|http://farm8.staticflickr.com/7175/6466771851_a9a82d1ddc.jpg|
+  subject.should =~ %r|http://farm8.staticflickr.com/7014/6466788173_1898db6772.jpg|
+  subject.should =~ %r|http://farm8.staticflickr.com/7006/6466777445_c9661aae40.jpg|
 end

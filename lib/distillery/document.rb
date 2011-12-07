@@ -134,7 +134,7 @@ module Distillery
     private
 
     def contains_content_image?(node)
-      node.name == 'img' || node.children.css('img').length == 1
+      node.name == 'img' || node.children.css('img').length > 0
     end
 
     def scorable_elements
