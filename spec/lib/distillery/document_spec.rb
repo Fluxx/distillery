@@ -60,7 +60,7 @@ module Distillery
     end
 
     describe 'remove_unlikely_elements!' do
-      %w[combx comment disqus foot header meta nav rss shoutbox sidebar sponsor].each do |klass|
+      %w[combx comment community disqus extra foot header remark rss shoutbox sidebar sponsor ad-break agegate pagination pager popup].each do |klass|
         it "removes any elements classed .#{klass}, as it is unlikely to be page content" do
           doc = document_of("<div class='#{klass}'>foo</div>", :remove_unlikely_elements!)
           doc.inner_html.should == html_of("")

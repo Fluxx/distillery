@@ -11,7 +11,7 @@ module Distillery
     UNLIKELY_TAGS = %w[head script link meta]
 
     # HTML ids and classes that are unlikely to contain the content element.
-    UNLIKELY_IDENTIFIERS = /combx|comment|disqus|foot|header|meta|nav|rss|shoutbox|sidebar|sponsor/i
+    UNLIKELY_IDENTIFIERS = /combx|comment|community|disqus|extra|foot|header|remark|rss|shoutbox|sidebar|sponsor|ad-break|agegate|pagination|pager|popup/i
 
     # Elements that are whitelisted from being removed as unlikely elements
     REMOVAL_WHITELIST = %w[a body]

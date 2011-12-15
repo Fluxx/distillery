@@ -1,12 +1,17 @@
 require 'spec_helper'
+require 'iconv'
 
 def distillation_of(filename, options = {}, &block)
 
   describe "distillation of #{filename}" do
 
-    let(:fixture) do
+    let(:raw_fixture_data) do
       File.read(File.join(File.dirname(__FILE__), 'fixtures', filename))
     end
+
+    let(:fixture) {
+      Iconv.new('UTF-8//IGNORE', 'UTF-8').iconv(raw_fixture_data + ' ')[0..-2]
+    }
 
     subject { Distillery::Document.new(fixture).distill!(options) }
 
@@ -168,4 +173,18 @@ distillation_of 'maple_cookies.html', images: true do
   subject.should =~ %r|http://farm8.staticflickr.com/7175/6466771851_a9a82d1ddc.jpg|
   subject.should =~ %r|http://farm8.staticflickr.com/7014/6466788173_1898db6772.jpg|
   subject.should =~ %r|http://farm8.staticflickr.com/7006/6466777445_c9661aae40.jpg|
+end
+
+distillation_of 'swiss_chard_pie.html', images: true do
+  subject.should =~ /You may be familiar with Spanakopita/
+  subject.should =~ /Bring a large pot of generously salted/
+  subject.should =~ /for 10 to 20 minutes./
+end
+
+distillation_of 'mothers_brisket.html' do
+  subject.should =~ /Prep time: /
+  subject.should =~ /onions until deep golden/
+  subject.should =~ /3 tablespoons.+vegetable oil/
+  subject.should =~ /Preheat the oven to 375/
+  subject.should =~ /oven for about 30 minutes/
 end
