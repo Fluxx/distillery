@@ -131,7 +131,7 @@ distillation_of 'bourbon_balls.html' do
 end
 
 distillation_of 'bulgogi.html' do
-  subject.slice(0..100).should include('looking to create a menu')
+  subject.slice(0..1700).should include('looking to create a menu')
   subject.scan(/American to not fuss about the origin/).should have(1).result
   should =~ /early-season barbecue/
   should =~ /Still, it is American to not fuss/
@@ -187,4 +187,10 @@ distillation_of 'mothers_brisket.html' do
   subject.should =~ /3 tablespoons.+vegetable oil/
   subject.should =~ /Preheat the oven to 375/
   subject.should =~ /oven for about 30 minutes/
+end
+
+distillation_of 'oyako.html' do
+  subject.should =~ /Ingredients:/
+  subject.should =~ /4 servings/
+  subject.should =~ /Goes well with a clear soup/
 end

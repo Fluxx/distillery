@@ -117,33 +117,33 @@ module Distillery
 
       it 'gives one point per comma in the text of an element' do
         doc = document_of("<p>foo,bar,baz</p>", :score!)
-        doc.scores['/html/body/p'].should == 4
+        doc.scores['/html/body/p'].should == 68.0
       end
 
       it 'gives one point per chunk of 100 characters, max of 3' do
         doc = document_of("<p>#{'f'*201}</p>", :score!)
-        doc.scores['/html/body/p'].should == 4
+        doc.scores['/html/body/p'].should == 68.0
 
         doc = document_of("<p>#{'f'*1000}</p>", :score!)
-        doc.scores['/html/body/p'].should == 5
+        doc.scores['/html/body/p'].should == 85.0
       end
 
       it 'adds its own points to its parent' do
         doc = document_of("<div><div>foo</div></div>", :score!)
-        doc.scores['/html/body/div/div'].should == 2
-        doc.scores['/html/body/div'].should == 2
+        doc.scores['/html/body/div/div'].should == 30.0
+        doc.scores['/html/body/div'].should == 34.0
       end
 
       it 'adds 1/2 its points to its grandparent' do
         doc = document_of("<div><div><div>foo</div></div></div>", :score!)
-        doc.scores['/html/body/div/div/div'].should == 2
-        doc.scores['/html/body/div/div'].should == 2
-        doc.scores['/html/body/div'].should == 1
+        doc.scores['/html/body/div/div/div'].should == 26
+        doc.scores['/html/body/div/div'].should == 30.0
+        doc.scores['/html/body/div'].should == 17.0
       end
 
       it 'scales the final score by the inverse link density' do
         doc = document_of("<p>foobar<a>baz</a></p>", :score!)
-        doc.scores['/html/body/p'].should == 1.3333333333333335
+        doc.scores['/html/body/p'].should == 22.666666666666668
       end
 
     end
@@ -179,11 +179,6 @@ module Distillery
 
       it 'removes elements that have more images than p tags' do
         doc = doc_with_top_scored_html_of("<div class='remove'><img><img><img><p>bar</p><div>foo</div></div>", :clean_top_scoring_elements!)
-        doc.search('.remove').should be_empty
-      end
-
-      it 'removes elements that have way more li elements and it is not a list' do
-        doc = doc_with_top_scored_html_of("<div class='remove'><div>me<ul>#{'<li>a</li>'*200}</ul></div></div>", :clean_top_scoring_elements!)
         doc.search('.remove').should be_empty
       end
 
@@ -277,10 +272,11 @@ module Distillery
       end
 
       it 'picks the outtermost element in the event of a tie' do
-        doc = document_of("<div><div class='included'>#{'f,'*10}</div></div>")
-        doc.distill!.should =~ /included/
-        doc.scores['/html/body/div/div'].should == 11
-        doc.scores['/html/body/div'].should == 11
+        doc = document_of("<div><div class='is-included'>#{'f,'*10}</div><div class='also-included'>#{'f,'*10}</div></div>")
+        doc.distill!.should =~ /is-included/
+        doc.distill!.should =~ /also-included/
+        doc.scores['/html/body/div/div[1]'].should == 165.0
+        doc.scores['/html/body/div/div[2]'].should == 165.0
       end
 
       it 'returns sibling elements to the top scoring one that have > 25% of the top scoring element\'s score' do

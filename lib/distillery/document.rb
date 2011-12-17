@@ -36,6 +36,9 @@ module Distillery
     # needs to have in order to be considered related.
     RELATED_SCORE_RATIO = 0.045
 
+    # The prioritization level given to elements higher in the DOM
+    DOM_PRIORITIZATION = 25
+
     # The Nokogiri document
     attr_reader :doc
 
@@ -93,6 +96,7 @@ module Distillery
       end
 
       augment_scores_by_link_weight!
+      augment_scores_by_dom_depth!
     end
 
     # Distills the document down to just its content.
@@ -147,9 +151,17 @@ module Distillery
       end
     end
 
+    def augment_scores_by_dom_depth!
+      scores.each do |xpath, points|
+        factor = DOM_PRIORITIZATION - (xpath.split('/').length * 2)
+        scores[xpath] = scores[xpath] * factor
+      end
+    end
+
     def link_density(elem)
       link_length = elem.search('a').reduce(0) { |total, e| total + e.text.length }
-      total_length = [elem.text.length, 1].max # Protect against dividing by 0
+      collapsed_text = elem.text.gsub(/\W{3,}/, '') # remove excess whitespace
+      total_length = [collapsed_text.length, 1].max # Protect against dividing by 0
       link_length.to_f / total_length.to_f
     end
 
@@ -232,7 +244,7 @@ module Distillery
       elem.text.empty? ||                                  # Empty text
       (!is_anchor && elem.text.length < 15) ||             # Short text and not a link
       img > p ||                                           # More images than paragraphs
-      li > p && !(elem.name =~ /ul|ol/) ||                 # Has lots of list items
+      li > p && link_density > 0.2 ||                      # Has lots of list items and moderate link density
       input > p / 3 ||                                     # Has a high % of inputs
       weight < 25 && link_density > 0.2 ||                 # Weak content signal and moderate link density
       weight >= 25 && link_density > 0.5                   # Strong content signal and high link density
