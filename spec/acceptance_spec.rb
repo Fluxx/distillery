@@ -194,3 +194,10 @@ distillation_of 'oyako.html' do
   subject.should =~ /4 servings/
   subject.should =~ /Goes well with a clear soup/
 end
+
+distillation_of 'cheese_spread.html', images: true do
+  subject.should =~ /Yield/
+  subject.should =~ /maximum flavor/
+  subject.should_not =~ /You May Also Enjoy.../ # Related
+  subject.should_not =~ /recipe developer/ # Sidebar
+end

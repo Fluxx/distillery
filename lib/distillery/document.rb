@@ -11,7 +11,7 @@ module Distillery
     UNLIKELY_TAGS = %w[head script link meta]
 
     # HTML ids and classes that are unlikely to contain the content element.
-    UNLIKELY_IDENTIFIERS = /combx|comment|community|disqus|extra|foot|header|remark|rss|shoutbox|sidebar|sponsor|ad-break|agegate|pagination|pager|popup/i
+    UNLIKELY_IDENTIFIERS = /combx|comment|community|disqus|foot|header|remark|rss|shoutbox|sidebar|sponsor|ad-break|agegate|pagination|pager|popup/i
 
     # Elements that are whitelisted from being removed as unlikely elements
     REMOVAL_WHITELIST = %w[a body]
@@ -23,7 +23,7 @@ module Distillery
     POSITIVE_IDENTIFIERS = /article|body|content|entry|hentry|page|pagination|post|text/i
 
     # HTML ids and classes that are negative signals of the content element.
-    NEGATIVE_IDENTIFIERS = /combx|comment|contact|foot|footer|footnote|link|media|promo|related|scroll|shoutbox|sponsor|tags|widget/i
+    NEGATIVE_IDENTIFIERS = /combx|comment|contact|foot|footer|footnote|link|media|promo|related|scroll|shoutbox|sponsor|tags|widget|related/i
 
     # HTML elements that are unrelated to the content in the content element.
     UNRELATED_ELEMENTS = %w[iframe form object]
@@ -120,7 +120,10 @@ module Distillery
 
       top_scoring_elements.each do |element|
         element.search("*").each do |node|
-          node.remove if cleanable?(node, keep_images)
+          if cleanable?(node, keep_images)
+            debugger if node.to_s =~ /maximum flavor/
+            node.remove
+          end
         end
       end
     end
@@ -135,7 +138,10 @@ module Distillery
     end
 
     def contains_content_image?(node)
-      (node.name == 'img' || node.children.css('img').length > 0)
+      has_images = (node.name == 'img' || node.children.css('img').length > 0)
+      idclass = node['id'].to_s + node['class'].to_s
+
+      !idclass.match(NEGATIVE_IDENTIFIERS) && has_images
     end
 
     def scorable_elements
