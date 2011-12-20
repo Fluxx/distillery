@@ -237,14 +237,14 @@ module Distillery
       link_density = link_density(elem)
       is_anchor = elem.name == 'a'
 
-      weight < 0 ||                                        # Terrible weight
-      elem.text.empty? ||                                  # Empty text
-      (!is_anchor && elem.text.length < 15) ||             # Short text and not a link
-      img > p ||                                           # More images than paragraphs
-      li > p && link_density > 0.2 ||                      # Has lots of list items and moderate link density
-      input > p / 3 ||                                     # Has a high % of inputs
-      weight < 25 && link_density > 0.2 ||                 # Weak content signal and moderate link density
-      weight >= 25 && link_density > 0.5                   # Strong content signal and high link density
+      weight < 0 ||                            # Terrible weight
+      elem.text.empty? ||                      # Empty text
+      (!is_anchor && elem.text.length < 15) || # Short text and not a link
+      img > p ||                               # More images than paragraphs
+      li > p && link_density > 0.2 ||          # Has lots of list items and moderate link density
+      input > p / 3 ||                         # Has a high % of inputs
+      weight < 25 && link_density > 0.2 ||     # Weak content signal and moderate link density
+      weight >= 25 && link_density > 0.5       # Strong content signal and high link density
     end
 
   end
