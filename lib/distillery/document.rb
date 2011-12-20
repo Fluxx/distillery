@@ -119,26 +119,23 @@ module Distillery
       keep_images = !!options[:images]
 
       top_scoring_elements.each do |element|
-
         element.search("*").each do |node|
-          next if contains_content_image?(node) && keep_images
-          node.remove if has_empty_text?(node)
-        end
-
-        element.search("*").each do |node|
-          next if contains_content_image?(node) && keep_images
-          if UNRELATED_ELEMENTS.include?(node.name) ||
-            (node.text.count(',') < 2 && unlikely_to_be_content?(node))
-            node.remove
-          end
+          node.remove if cleanable?(node, keep_images)
         end
       end
     end
 
     private
 
+    def cleanable?(node, keep_images)
+      return false if contains_content_image?(node) && keep_images
+
+      UNRELATED_ELEMENTS.include?(node.name) ||
+      (node.text.count(',') < 2 && unlikely_to_be_content?(node))
+    end
+
     def contains_content_image?(node)
-      node.name == 'img' || node.children.css('img').length > 0
+      (node.name == 'img' || node.children.css('img').length > 0)
     end
 
     def scorable_elements
