@@ -34,10 +34,7 @@ module Distillery
 
     # The ratio to the top element's score an indentically class/id'd sibling
     # needs to have in order to be considered related.
-    RELATED_SCORE_RATIO = 0.045
-
-    # The prioritization level given to elements higher in the DOM
-    DOM_PRIORITIZATION = 25
+    RELATED_SCORE_RATIO = 0.027
 
     # The Nokogiri document
     attr_reader :doc
@@ -96,7 +93,6 @@ module Distillery
       end
 
       augment_scores_by_link_weight!
-      augment_scores_by_dom_depth!
     end
 
     # Distills the document down to just its content.
@@ -151,13 +147,6 @@ module Distillery
     def augment_scores_by_link_weight!
       scores.each do |xpath, points|
         scores[xpath] = scores[xpath] * ( 1 - link_density(at(xpath)) )
-      end
-    end
-
-    def augment_scores_by_dom_depth!
-      scores.each do |xpath, points|
-        factor = DOM_PRIORITIZATION - (xpath.split('/').length * 2)
-        scores[xpath] = scores[xpath] * factor
       end
     end
 

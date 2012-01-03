@@ -189,15 +189,17 @@ distillation_of 'mothers_brisket.html' do
   subject.should =~ /oven for about 30 minutes/
 end
 
-distillation_of 'oyako.html' do
-  subject.should =~ /Ingredients:/
-  subject.should =~ /4 servings/
-  subject.should =~ /Goes well with a clear soup/
-end
-
 distillation_of 'cheese_spread.html', images: true do
   subject.should =~ /Yield/
   subject.should =~ /maximum flavor/
   subject.should_not =~ /You May Also Enjoy.../ # Related
   subject.should_not =~ /recipe developer/ # Sidebar
+end
+
+distillation_of 'savory_scones.html', images: true do
+  subject.should =~ /Cook Without a Book: Meatless Meals/
+  subject.should =~ /8 scones./
+
+  subject.should_not =~ /An Innocent in America/  # Footer
+  subject.should_not =~ /TWITTER/                 # Sidebar
 end
